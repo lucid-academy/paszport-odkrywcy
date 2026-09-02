@@ -319,9 +319,58 @@ const ans={}, fotos={};
 let imie="", notatki="";
 const K=(p,i)=>p+"-"+i;
 
+/* ————— zapis w przeglądarce —————
+   Odpowiedzi przeżywają zamknięcie karty. Kluczowe przy zadaniach ze zdjęciem:
+   przełączenie do aparatu potrafi ubić kartę w tle, dlatego zrzucamy stan
+   również na visibilitychange. Zdjęcia trafiają do localStorage po zmniejszeniu
+   (patrz pic()) — surowe z aparatu wysadziłyby limit ~5 MB przy pierwszym. */
+const LS="paszport-odkrywcy-v1";
+let jestZapis=false, blokadaZapisu=false, zapisT=null;
+
+/* Tryb prywatny i plik otwarty prosto z dysku (file://) potrafią blokować
+   localStorage. Sprawdzamy to raz na starcie, żeby ekran startowy nie obiecywał
+   zapisu, którego nie będzie. */
+const zapisDostepny=(()=>{
+  try{ localStorage.setItem(LS+"-test","1"); localStorage.removeItem(LS+"-test"); return true }
+  catch(e){ return false }
+})();
+
+function zapisz(){
+  if(!zapisDostepny)return;
+  try{
+    localStorage.setItem(LS,JSON.stringify({ans,fotos,imie,notatki,cur}));
+    blokadaZapisu=false;
+  }catch(e){ blokadaZapisu=true }
+}
+function zapiszWkrotce(){clearTimeout(zapisT);zapisT=setTimeout(zapisz,400)}
+function wczytaj(){
+  let d=null;
+  try{ d=JSON.parse(localStorage.getItem(LS)||"null") }catch(e){ return }
+  if(!d)return;
+  Object.assign(ans,d.ans||{});
+  Object.assign(fotos,d.fotos||{});
+  imie=d.imie||""; notatki=d.notatki||"";
+  cur=Math.min(Math.max(0,d.cur|0),P.length-1);
+  jestZapis=Object.keys(ans).length>0||Object.keys(fotos).length>0||!!imie||!!notatki;
+}
+function odNowa(){
+  if(!confirm("Skasować wszystkie odpowiedzi i zacząć grę od nowa?\n\nTej operacji nie da się cofnąć."))return;
+  for(const k in ans)delete ans[k];
+  for(const k in fotos)delete fotos[k];
+  imie="";notatki="";cur=0;jestZapis=false;blokadaZapisu=false;
+  clearTimeout(zapisT);
+  try{localStorage.removeItem(LS)}catch(e){}
+  show("start");
+}
+const ostrzezenieZapisu=()=>blokadaZapisu?`<div class="uwaga"><b>Nie udało się zapisać zdjęcia w przeglądarce</b> — pamięć jest pełna.
+  Odpowiedzi działają w tej sesji, ale mogą nie przetrwać zamknięcia karty. Usuń jedno ze zdjęć albo pokaż paszport w recepcji teraz.</div>`:"";
+
+document.addEventListener("visibilitychange",()=>{if(document.hidden){clearTimeout(zapisT);zapisz()}});
+window.addEventListener("pagehide",()=>{clearTimeout(zapisT);zapisz()});
+
 /* ————— widoki ————— */
 const el=()=>document.getElementById("view");
-function show(v,i){view=v;if(i!==undefined)cur=i;render();window.scrollTo({top:0,behavior:"instant"})}
+function show(v,i){view=v;if(i!==undefined)cur=i;zapiszWkrotce();render();window.scrollTo({top:0,behavior:"instant"})}
 function go(d){
   if(view==="mapa"){show("punkt");return}
   if(view==="punkt"){
@@ -343,9 +392,15 @@ function vStart(){
     ${fig({s:"img/99-pocztowka.jpg",c:"Bydgoskie Przedmieście na dawnej pocztówce — narożnik domu Konrada Schwartza przy ul. Bydgoskiej 50-52, od którego zaczyna się trasa. Źródło: fotopolska.eu."})}
     <p class="mikro">Zasady gry</p>
     <ol class="zasady">${ZASADY.map(z=>`<li>${z}</li>`).join("")}</ol>
-    <button class="cta" onclick="show('punkt',0)">Zacznij grę · 12 przystanków</button>
+    ${jestZapis
+      ?`<button class="cta" onclick="show('punkt',${cur})">Wróć do gry · przystanek ${cur+1}</button>
+        <button class="cta gh" onclick="odNowa()">Zacznij od nowa</button>`
+      :`<button class="cta" onclick="show('punkt',0)">Zacznij grę · 12 przystanków</button>`}
     <button class="cta gh" onclick="show('mapa')">Zobacz trasę na mapie</button>
-    <div class="uwaga" style="text-align:left">Odpowiedzi zapisują się tylko na czas tej sesji — nie zamykaj karty w trakcie spaceru. Trasa jest pętlą: zaczynasz i kończysz przy Bydgoskiej 50.</div>
+    <div class="uwaga" style="text-align:left">${zapisDostepny
+      ?"Odpowiedzi zapisują się same w tej przeglądarce — możesz zamknąć kartę i wrócić później, nic nie przepadnie. Skasuje je tryb prywatny albo wyczyszczenie danych przeglądarki."
+      :"Ta przeglądarka nie pozwala zapisać odpowiedzi — najczęściej dlatego, że plik jest otwarty prosto z dysku albo działa tryb prywatny. Nie zamykaj karty w trakcie spaceru."}
+      Trasa jest pętlą: zaczynasz i kończysz przy Bydgoskiej 50.</div>
   </div>`;
 }
 
@@ -394,9 +449,9 @@ function vPunkt(){
   const zad=p.z.map((z,i)=>{
     const k=K(pi,i), v=esc(ans[k]||"");
     let f="";
-    if(z.t==="liczba")f=`<input type="number" inputmode="numeric" placeholder="wpisz liczbę" value="${v}" oninput="ans['${k}']=this.value;bump()">`;
-    else if(z.t==="tekst")f=`<textarea placeholder="Twoja odpowiedź…" oninput="ans['${k}']=this.value;bump()">${v}</textarea>`;
-    else if(z.t==="wybor")f=`<div class="wyb">${z.o.map(o=>`<button aria-pressed="${ans[k]===o}" onclick="ans['${k}']=${JSON.stringify(o).replace(/"/g,'&quot;')};render()">${o}</button>`).join("")}</div>`;
+    if(z.t==="liczba")f=`<input type="number" inputmode="numeric" placeholder="wpisz liczbę" value="${v}" oninput="ans['${k}']=this.value;bump();zapiszWkrotce()">`;
+    else if(z.t==="tekst")f=`<textarea placeholder="Twoja odpowiedź…" oninput="ans['${k}']=this.value;bump();zapiszWkrotce()">${v}</textarea>`;
+    else if(z.t==="wybor")f=`<div class="wyb">${z.o.map(o=>`<button aria-pressed="${ans[k]===o}" onclick="ans['${k}']=${JSON.stringify(o).replace(/"/g,'&quot;')};zapisz();render()">${o}</button>`).join("")}</div>`;
     else if(z.t==="foto")f=`<div class="foto">
         <label>${fotos[k]?"Zmień zdjęcie":"Zrób zdjęcie"}<input type="file" accept="image/*" capture="environment" onchange="pic('${k}',this)"></label>
         ${fotos[k]?`<img src="${fotos[k]}" alt="Twój rysunek"><button class="del" onclick="delpic('${k}')">usuń</button>`:""}</div>`;
@@ -418,6 +473,7 @@ function vPunkt(){
       ${(p.fh||[]).map(fig).join("")}
     </details>
     <p class="mikro">Kącik detektywa</p>
+    ${ostrzezenieZapisu()}
     <div class="zad">${zad}</div>
     ${slow}
   </div>`;
@@ -443,19 +499,20 @@ function vKoniec(){
       <p class="sub">Kulturalny hub · ul. Bydgoska 50</p>
       <p class="txt">Za udział i rozwiązanie wszystkich zagadek w grze miejskiej „Paszport Odkrywcy Bydgoskiego Przedmieścia”, zorganizowanej w ramach wakacji w Kulturalnym hubie Bydgoskiego Przedmieścia w Toruniu.</p>
       <p class="txt">Oficjalnie ogłaszam, że ja, Detektyw:</p>
-      <input type="text" placeholder="Twoje imię" value="${esc(imie)}" oninput="imie=this.value">
+      <input type="text" placeholder="Twoje imię" value="${esc(imie)}" oninput="imie=this.value;zapiszWkrotce()">
       <p class="cap">Imię Odkrywcy</p>
       <p class="txt">przeszedłem zakątki Bydgoskiego Przedmieścia, odkryłem tajemnice dawnych architektów, poznałem niesamowite losy mieszkańców i od dziś noszę tytuł <b>Mistrza Historii</b> tej części Torunia!</p>
       <p style="font-size:15px;margin:0">Ukończono ${nDone()} z 12 przystanków</p>
     </div>
 
     <div class="uwaga">Odpowiedzi sprawdza recepcja hubu — ta strona ich nie ocenia. Pokaż poniższe podsumowanie przy odbiorze nagrody.</div>
+    ${ostrzezenieZapisu()}
     <p class="mikro">Twoje odpowiedzi</p>
     <div class="sumbox">${rows}</div>
 
     <p class="mikro">Notes Odkrywcy</p>
     <p style="font-size:14.5px;margin:0 0 8px">Miejsce na Twoje dodatkowe spostrzeżenia, uwagi i notatki z trasy.</p>
-    <textarea placeholder="Co jeszcze zwróciło Twoją uwagę?" oninput="notatki=this.value">${esc(notatki)}</textarea>
+    <textarea placeholder="Co jeszcze zwróciło Twoją uwagę?" oninput="notatki=this.value;zapiszWkrotce()">${esc(notatki)}</textarea>
 
     <details class="rys" style="margin-top:18px"><summary>Skąd to wiemy — źródła</summary>
       <div class="zrodla">
@@ -473,6 +530,8 @@ function vKoniec(){
     </details>
 
     <button class="cta gh" onclick="show('punkt',0)">Wróć do trasy</button>
+    <p style="font-size:13.5px;color:var(--ink2);margin:22px 0 0;text-align:left">Paszport oddany i nagroda odebrana? Wyczyść odpowiedzi, żeby następny Odkrywca zaczął od czystej karty — szczególnie jeśli gracie na wspólnym telefonie albo tablecie z recepcji.</p>
+    <button class="cta gh" onclick="odNowa()">Wyczyść i zacznij od nowa</button>
   </div>`;
 }
 
@@ -492,10 +551,29 @@ function render(){
     "Treść gry: Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia · opracowanie Zuzanna Falleńczyk<br>Wersja cyfrowa: demo techniczne, Fundacja Lucid Academy";
 }
 function bump(){const b=document.getElementById("progbar");if(b)b.style.width=(nDone()/P.length*100)+"%"}
+/* Zdjęcie z aparatu ma 2–5 MB; miniaturka w podsumowaniu ma 76 px. Zmniejszamy do
+   1000 px / JPEG 0.7 (~150 KB) — mieści się w localStorage i nie zamula DOM-u. */
 function pic(k,inp){
   const f=inp.files&&inp.files[0];if(!f)return;
-  const r=new FileReader();r.onload=e=>{fotos[k]=e.target.result;render()};r.readAsDataURL(f);
+  const r=new FileReader();
+  r.onload=e=>{
+    const src=e.target.result, im=new Image();
+    im.onload=()=>{
+      const sk=Math.min(1,1000/Math.max(im.width,im.height));
+      const c=document.createElement("canvas");
+      c.width=Math.round(im.width*sk); c.height=Math.round(im.height*sk);
+      const g=c.getContext("2d");
+      g.fillStyle="#fff"; g.fillRect(0,0,c.width,c.height);
+      g.drawImage(im,0,0,c.width,c.height);
+      try{ fotos[k]=c.toDataURL("image/jpeg",.7) }catch(err){ fotos[k]=src }
+      zapisz(); render();
+    };
+    im.onerror=()=>{fotos[k]=src;zapisz();render()};
+    im.src=src;
+  };
+  r.readAsDataURL(f);
 }
-function delpic(k){delete fotos[k];render()}
+function delpic(k){delete fotos[k];zapisz();render()}
+wczytaj();
 render();
 </script>
