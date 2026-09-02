@@ -1,0 +1,501 @@
+<!-- Paszport Odkrywcy Bydgoskiego Przedmieścia — cyfrowa wersja gry terenowej.
+     Treść: Toruńska Agenda Kulturalna / Kulturalny hub, opr. Zuzanna Falleńczyk.
+     Demo techniczne: Fundacja Lucid Academy. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paszport Odkrywcy Bydgoskiego Przedmieścia</title>
+<style>
+:root{
+  --pap:#E6D9C6; --pap2:#DACDBA; --pap3:#C9BAA3;
+  --ink:#312D2A; --ink2:#6B5E4E; --ink3:#8B7B65;
+  --azur:#007FFF; --ceg:#7A4A3A;
+  --disp:Didot,"Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Times New Roman",Times,Georgia,serif;
+  --util:ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--pap);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:radial-gradient(rgba(120,95,60,.07) .6px,transparent .6px),radial-gradient(rgba(80,60,40,.05) .5px,transparent .5px);
+  background-size:7px 7px,11px 11px;background-position:0 0,3px 5px}
+.app{max-width:560px;margin:0 auto;padding:0 0 96px;position:relative}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--azur);outline-offset:2px}
+.hr{height:1px;background:var(--pap3);margin:0 18px}
+
+/* running head */
+.rh{padding:14px 18px 0;text-align:center}
+.rh small{font-family:var(--util);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink3)}
+.rh h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.03em;line-height:.9;
+  font-size:clamp(30px,9.5vw,46px);margin:8px 0 6px}
+.rh .strip{font-family:var(--util);font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink2);margin:0 0 12px}
+
+/* dark nav bar — jak paski TRASA w oryginale */
+.trasa{background:var(--ink);color:var(--pap);font-family:var(--util);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;padding:9px 18px;line-height:1.5}
+.trasa b{color:#fff;font-weight:700}
+
+.pad{padding:18px}
+h2.pt{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:1;
+  font-size:clamp(23px,6.4vw,32px);margin:14px 0 4px}
+.addr{font-family:var(--util);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ceg);margin:0 0 2px}
+.rozp{background:var(--pap2);border-left:3px solid var(--azur);padding:10px 13px;margin:12px 0;font-size:15px}
+.rozp b{font-family:var(--util);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:3px;font-weight:600}
+.mikro{font-family:var(--util);font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-align:center;
+  color:var(--ink2);margin:22px 0 10px;font-weight:600}
+
+/* ikonografia */
+figure.f{margin:13px 0 0}
+figure.f img{display:block;width:100%;height:auto;max-height:76vh;object-fit:contain;
+  background:var(--pap2);border:1px solid var(--pap3)}
+figure.f.mini img{width:auto;max-width:118px;margin:0 auto;border:0;background:none}
+figure.f figcaption{font-family:var(--util);font-size:10px;line-height:1.6;letter-spacing:.04em;
+  color:var(--ink3);margin-top:5px;text-align:left}
+details.pod{margin:10px 0 0}
+details.pod>summary{list-style:none;font-family:var(--util);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ceg);cursor:pointer;padding:3px 0}
+details.pod>summary::-webkit-details-marker{display:none}
+details.pod[open]>summary{color:var(--ink3)}
+.cover figure.f{margin:18px 0 0}
+.hist p{margin:0 0 11px;text-align:justify;hyphens:auto}
+.hist{font-size:15.5px}
+details.rys{margin:14px 0 0}
+details.rys>summary{list-style:none;background:none;border:1px solid var(--ink);border-radius:2px;padding:11px 14px;
+  font-family:var(--util);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-align:center;color:var(--ink)}
+details.rys>summary::-webkit-details-marker{display:none}
+details.rys[open]>summary{border-color:var(--pap3);color:var(--ink3);margin-bottom:8px}
+
+/* zadania */
+.zad{margin:6px 0 0}
+.q{border-top:1px solid var(--pap3);padding:15px 0 4px}
+.q p{margin:0 0 9px;font-size:15.5px}
+.q .qn{font-family:var(--util);font-size:9.5px;letter-spacing:.16em;color:var(--azur);text-transform:uppercase;display:block;margin-bottom:5px}
+input[type=text],input[type=number],textarea{width:100%;background:transparent;border:0;border-bottom:1.5px dotted var(--ink2);
+  font-family:var(--body);font-size:16px;color:var(--ink);padding:6px 2px;resize:vertical}
+textarea{border:1.5px dotted var(--ink2);border-radius:2px;padding:9px;min-height:70px}
+input:focus,textarea:focus{outline:none;border-color:var(--azur);border-style:solid}
+.wyb{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.wyb button{text-align:left;background:transparent;border:1px solid var(--pap3);border-radius:2px;padding:10px 12px;font-size:15px;color:var(--ink2)}
+.wyb button[aria-pressed=true]{border-color:var(--azur);background:rgba(0,127,255,.07);color:var(--ink)}
+.foto{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.foto label{background:var(--ink);color:var(--pap);border-radius:2px;padding:10px 15px;font-family:var(--util);
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.foto input{display:none}
+.foto img{width:76px;height:76px;object-fit:cover;border:1px solid var(--pap3)}
+.foto .del{background:none;border:0;color:var(--ceg);font-family:var(--util);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+
+/* słowniczek */
+.slow{margin:20px 0 0;border:1px dashed var(--pap3);border-radius:2px;padding:12px 14px}
+.slow b{font-family:var(--util);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:7px}
+.slow dt{font-family:var(--util);font-size:12px;font-weight:700;letter-spacing:.03em;margin-top:7px}
+.slow dd{margin:1px 0 0;font-size:14px;color:var(--ink2)}
+.slow dl{margin:0}
+
+/* nawigacja dolna */
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--ink);z-index:9}
+.navin{max-width:560px;margin:0 auto;display:flex;align-items:stretch}
+.nav button{flex:1;background:none;border:0;color:var(--pap);font-family:var(--util);font-size:10.5px;
+  letter-spacing:.11em;text-transform:uppercase;padding:15px 8px}
+.nav button:disabled{color:#6a635c}
+.nav .mid{flex:0 0 92px;border-left:1px solid #4a443e;border-right:1px solid #4a443e;font-family:var(--util);
+  color:var(--pap);font-size:10px;letter-spacing:.08em;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px}
+.nav .mid b{font-family:var(--disp);font-size:19px;letter-spacing:0;line-height:1}
+.prog{height:3px;background:#4a443e}
+.prog i{display:block;height:100%;background:var(--azur);transition:width .3s}
+
+/* mapa */
+svg.tr{display:block;width:100%;height:auto;background:var(--pap2);border:1px solid var(--pap3)}
+.stop{cursor:pointer}
+.legend{font-family:var(--util);font-size:10px;letter-spacing:.06em;color:var(--ink3);padding:8px 2px;display:flex;gap:14px;flex-wrap:wrap}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+
+/* start / koniec */
+.cover{padding:26px 18px 8px;text-align:center}
+.cover .line{margin:16px auto 20px;max-width:420px}
+.zasady li{font-size:15px;margin:0 0 9px;text-align:left}
+.zasady{padding-left:20px;margin:8px 0 0}
+.cta{display:block;width:100%;background:var(--azur);color:#fff;border:0;border-radius:2px;padding:15px;
+  font-family:var(--util);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:18px}
+.cta.gh{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-top:9px}
+.cert{border:2px solid var(--ink);padding:24px 20px;text-align:center;margin-top:6px;background:rgba(255,255,255,.22)}
+.cert h3{font-family:var(--disp);text-transform:uppercase;letter-spacing:.06em;font-size:23px;font-weight:400;margin:0 0 4px;line-height:1.1}
+.cert .sub{font-family:var(--util);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin:0 0 20px}
+.cert input{text-align:center;font-family:var(--disp);font-size:24px;border-bottom-style:solid;border-color:var(--ink2)}
+.cert .cap{font-family:var(--util);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin:5px 0 22px}
+.cert .txt{font-size:14.5px;line-height:1.6;margin:0 0 14px}
+.zrodla{font-family:var(--util);font-size:11px;line-height:1.9;color:var(--ink2);overflow-wrap:break-word}
+.zrodla b{display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin:10px 0 4px}
+.zrodla a{color:var(--ink2)}
+.sumbox{margin-top:22px}
+.sumq{border-top:1px solid var(--pap3);padding:11px 0}
+.sumq .k{font-family:var(--util);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.sumq .v{font-size:15.5px;margin-top:2px}
+.sumq .v.pusto{color:var(--ceg);font-style:italic}
+.sumq img{width:64px;height:64px;object-fit:cover;border:1px solid var(--pap3);margin-top:5px}
+.uwaga{background:var(--pap2);border-left:3px solid var(--ceg);padding:11px 13px;font-size:14.5px;margin:16px 0}
+.stopka{font-family:var(--util);font-size:9.5px;letter-spacing:.08em;color:var(--ink3);text-align:center;
+  padding:26px 18px 0;line-height:1.8}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <div class="rh">
+    <small>„Paszport Odkrywcy Bydgoskiego Przedmieścia”</small>
+    <h1>Bydgoskie<br>Przedmieście</h1>
+    <p class="strip">Historia · Architektura · Sztuka</p>
+  </div>
+  <div id="view"></div>
+  <p class="stopka" id="stopka"></p>
+</div>
+
+<nav class="nav" id="nav" hidden>
+  <div class="prog"><i id="progbar"></i></div>
+  <div class="navin">
+    <button id="bPrev" onclick="go(-1)">← Wstecz</button>
+    <button class="mid" onclick="show('mapa')"><b id="midn">1</b><span>mapa</span></button>
+    <button id="bNext" onclick="go(1)">Dalej →</button>
+  </div>
+</nav>
+
+<script>
+/* ————— treść gry ————— */
+const ZASADY=[
+"Gra nie wymaga aplikacji ani przewodnika — wystarczysz Ty i oczy szeroko otwarte.",
+"Twoim zadaniem jest dotarcie w okolice wskazanych skrzyżowań lub ulic, a następnie odnalezienie konkretnego budynku na podstawie wskazówek. Szukaj rzeźb, detali lub tablic rejestru zabytków.",
+"Dopiero gdy będziesz pewien, że stoisz przed właściwym obiektem, odsłoń historię budynku.",
+"Na każdym przystanku czeka zestaw pytań. Odpowiedzi zapisujesz tutaj — na końcu pokażesz je w recepcji hubu.",
+"Powodzenia!"];
+
+const G={ // słowniczek
+ szachulec:"Typ budowli drewnianej, w której pola między belkami wypełnia się innym materiałem — u nas cegłą.",
+ eklektyzm:"Styl łączący elementy różnych stylów architektonicznych w spójną całość.",
+ putto:"Motyw dekoracyjny: mały nagi chłopiec albo sama jego głowa, często uskrzydlony.",
+ nereida:"W mitologii greckiej nimfa morska, córka Nereusa i Doris.",
+ kartusz:"Ozdobne obramowanie tarczy herbowej, monogramu, napisu lub malowidła.",
+ bonie:"Dekoracyjna technika wykończenia elewacji — kamienne lub tynkowe pasy w dolnej partii budynku.",
+ loggia:"Wnęka w ścianie budynku. W przeciwieństwie do balkonu nie wystaje poza bryłę, jest zadaszona i osłonięta z trzech stron.",
+ feston:"Ozdobne przedstawienie zwieszającej się tkaniny, wieńca z kwiatów, roślin lub owoców.",
+ atlant:"Postać mężczyzny podtrzymującego głową, barkami lub rękami element architektoniczny. Żeński odpowiednik to kariatyda.",
+ pinakiel:"Pionowy element dekoracyjny w formie smukłej wieżyczki zakończonej iglicą. Inaczej fiala lub sterczyna.",
+ neogotyk:"Styl nawiązujący do gotyku, powstały ok. połowy XVIII w. w Anglii, trwający do początku XX w.",
+ kamienica:"Kamienica czynszowa: okazały budynek mieszkalny, w którym lokale przeznaczono na wynajem. Szczyt popularności na przełomie XIX i XX w."
+};
+
+const P=[
+{n:1,x:430,y:430,skrz:"ul. Bydgoska 50-52",adres:"ul. Bydgoska 50-52",
+ trasa:"Punkt startowy — Kulturalny hub",
+ rozp:"Stoisz przed hubem. To ten budynek z konstrukcją ryglową i narożnym wykuszem.",
+ hist:["Czy wiesz, że budynek, przed którym stoisz, ma ponad 120 lat i skrywa niesamowitą historię? To dzieło oraz dom rodzinny Konrada Schwartza — niezwykle zdolnego budowniczego. W części z numerem 50 zamieszkał sam ze swoją żoną Gabrielą, córką dawnego burmistrza Torunia, a w numerze 52 urządził luksusowe mieszkania.",
+ "Przez wiele lat ludzie myśleli, że historia pana Konrada skończyła się przed II wojną światową. Niedawno odkryto jednak niesamowitą prawdę. Kiedy w Niemczech do władzy doszedł Adolf Hitler, zięć pana Konrada — mąż jego najstarszej córki Anny — został ważnym politykiem. Pan Konrad i jego córka byli tak odważni i prawi, że nie dali się oszukać złym ideom. Rozmawiali z nim tak długo, aż zięć zrozumiał swój błąd, sprzeciwił się Hitlerowi i musiał uciekać przed niebezpieczeństwem aż do Ameryki. Sam pan Konrad został w Toruniu i podczas wojny potajemnie pomagał prześladowanym ludziom.",
+ "Po wojnie budynek przybierał nowe oblicza. Czy potrafisz sobie wyobrazić, że w tych pięknych salach mieścił się przez jakiś czas posterunek milicji? Później wprowadzili się tu studenci do akademika Uniwersytetu Mikołaja Kopernika, a w jednym z mieszkań żył słynny architekt Zbigniew Wahl, który zaprojektował toruński dworzec autobusowy.",
+ "Dom pana Konrada przez lata zaniedbań niszczał i prawie zamienił się w ruinę. Dzisiaj, po wielkim i trudnym remoncie, znów tętni życiem. W części pod numerem 50 powstał Kulturalny hub Bydgoskiego Przedmieścia, dzielący przestrzeń z Książnicą Kopernikańską. W numerze 52 siedzibę znalazły Zakład Aktywności Zawodowej, Dzienny Dom Pobytu Seniora oraz Toruńskie Laboratorium Miejskie."],
+ z:[{t:"tekst",q:"Rozejrzyj się wokół wejścia do Kulturalnego hubu. Jak myślisz, które elementy budynku pamiętają jeszcze czasy pana Konrada, a które wyglądają na zupełnie nowe?"},
+    {t:"liczba",q:"Policz, ile dużych okien znajduje się na parterze kamienicy pod numerem 50-52. To Twój pierwszy zdobyty klucz do zagadek Bydgoskiego Przedmieścia."}],
+ f:{s:"img/01-hub-dzis.jpg",c:"Kulturalny hub, ul. Bydgoska 50-52 — stan dzisiejszy."},
+ fh:[{s:"img/01-hub-dawniej.jpg",c:"Dom Konrada Schwartza na fotografii z epoki."},
+     {s:"img/01-konrad-schwartz.jpg",c:"Konrad Schwartz. Fot. z archiwum rodzinnego Eda Grube, za nowosci.com.pl."},
+     {s:"img/01-hol-rycina.jpg",c:"„Diele des Landhauses Schwartz in Thorn” — hol domu na rycinie z epoki. Ten sam hol zobaczysz dziś, wchodząc do hubu."}],
+ g:[]},
+
+{n:2,x:540,y:412,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 42",
+ trasa:"Kieruj się na wschód, w stronę zespołu staromiejskiego. Bądź czujny — kolejny punkt jest bliżej, niż myślisz. Jeśli dopisze Ci szczęście, u celu ujrzysz trzy żabie murale lokalnego artysty, Andrzeja Po Prostu.",
+ rozp:"Murowana kamienica narożna z przedogródkiem — pasem zieleni od strony ulicy Bydgoskiej.",
+ hist:["Kamienica znajduje się w obszarze, który prężnie rozwijał się w drugiej połowie XIX wieku. W 1871 roku Toruń został podniesiony do rangi twierdzy I kategorii, co poskutkowało zakazem budowania na Bydgoskim Przedmieściu zabudowy innej niż drewniana. Rozejrzyj się — wokół wciąż stoi drewniana zabudowa, świadek tej części historii miasta. Prawo zniesiono w 1909 roku, dając tym samym początek kamienicy, przed którą stoisz. W marcu 1909 roku piekarz Gustaw Sodtke podjął decyzję o jej wybudowaniu.",
+ "Prawo narzucało konieczność stworzenia przed budynkiem tak zwanego przedogródka, czyli niezabudowanego pasa zieleni od strony ulicy. Czy jesteś w stanie go odnaleźć? Od początku kamienica miała dwie funkcje: mieszkalną i usługową. Na parterze mieściła się między innymi piekarnia właściciela z wielkim piecem i elektryczną ugniatarką do ciasta. Projekt zakładał również pralnię i stajnię.",
+ "Czy wiesz, w jaki sposób chronione są zabytki w Polsce? Jedną z form ochrony jest Rejestr zabytków. Kamienicę wpisano do niego 8 września 2015 roku pod numerem A/1679. Litera A nie jest przypadkowa — dokumentację prowadzi się w trzech zbiorach: A dla zabytków nieruchomych, B dla ruchomych, C dla archeologicznych. Omawiany wcześniej budynek przy Bydgoskiej 50-52 też jest w rejestrze — wpis pochodzi z 1983 roku. Szukaj na elewacjach Błękitnej Tarczy, międzynarodowego symbolu ochrony zabytków."],
+ z:[{t:"liczba",q:"Przejdź wzdłuż elewacji przy ul. Bydgoskiej oraz Konopnickiej. Policz drzwi wejściowe."},
+    {t:"tekst",q:"Zapamiętaj i zapisz, jakie dekoracje zdobią te drzwi."}],
+ fh:[{s:"img/02-parkstrasse.jpg",c:"„Thorn — Parkstrasse (Bromberger Vorstadt)”: dzisiejsza ul. Konopnickiej na dawnej pocztówce. Źródło: fotopolska.eu."},
+     {s:"img/blekitna-tarcza.png",mini:1,c:"Błękitna Tarcza — międzynarodowy znak ochrony zabytków. Takiej tabliczki szukaj na elewacjach."}],
+ g:["kamienica"]},
+
+{n:3,x:568,y:452,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 40",
+ trasa:"Rozejrzyj się. Odszukaj drewniany budynek naprzeciwko miejsca, w którym stoisz.",
+ rozp:"Drewniana willa w konstrukcji szachulcowej, z ciemnymi belkami na jasnym tynku i wieżyczką.",
+ hist:["Czy pamiętasz informacje z poprzedniego przystanku? Stoisz właśnie pod zabytkiem będącym idealnym przykładem budownictwa drewnianego wznoszonego w latach 1871–1909. Projektem zajęła się firma budowlana Houterman & Walter, a pozwolenie na budowę wydano w grudniu 1895 roku.",
+ "Budynek wzniesiono w stylu eklektycznym, w konstrukcji szachulcowej z wypełnieniem ceglanym. Do Rejestru Zabytków trafił w 1983 roku."],
+ z:[{t:"liczba",q:"Drewniane belki na jasnym tynku tworzą niesamowite wzory. Przyjrzyj się frontowej ścianie willi i znajdź belki krzyżujące się w wielkie litery X — to Krzyże Świętego Andrzeja. Ile ich naliczysz na całej przedniej ścianie?"},
+    {t:"foto",q:"Willa ma przepiękne drewniane balustrady na balkonach i werandach. Przerysuj fragment barierki albo stwórz własny wzór z kresek, który pasowałby do tego domu — i zrób zdjęcie swojego rysunku."}],
+ f:{s:"img/03-bydgoska-40.jpg",c:"Willa przy ul. Bydgoskiej 40 — konstrukcja szachulcowa z wypełnieniem ceglanym."},
+ g:["szachulec","eklektyzm"]},
+
+{n:4,x:578,y:282,skrz:"Róg ul. Konopnickiej i ul. Krasińskiego",adres:"ul. Konopnickiej 18",
+ trasa:"Kieruj się na północ.",
+ rozp:"Willa o złożonej bryle, z narożną wieżyczką krytą dachem namiotowym i zielonymi okiennicami.",
+ hist:["W 1900 roku firma Houtermans & Walter rozpoczyna budowę domu — to ta sama firma, która projektowała budynek przy ul. Bydgoskiej 40. Po ukończeniu budowy zamieszkała w nim jedna rodzina. Po II wojnie światowej w willi wydzielono cztery odrębne mieszkania.",
+ "Główne wejście znajduje się od strony ulicy Konopnickiej — czy potrafisz je odnaleźć? Zwróć uwagę na złożoność bryły i detale: balkon, zielone okiennice, wieżyczkę krytą dachem namiotowym. Czy widzisz inne ciekawe elementy? Budynek wpisano do Rejestru Zabytków w 1993 roku."],
+ z:[{t:"foto",q:"Willa ma bardzo ciekawą bryłę. Przerysuj wieżyczkę — pamiętaj o wszystkich detalach, między innymi o gwieździe na czubku dachu i okrągłych oknach. Zrób zdjęcie rysunku."},
+    {t:"liczba",q:"Spójrz jeszcze raz na samą wieżyczkę na rogu. Ile małych okienek znajduje się na jej najwyższym poziomie?"},
+    {t:"tekst",q:"Gdybyś miał zamieszkać w jednym z poznanych już domów, który byś wybrał? Napisz krótko, dlaczego."}],
+ f:{s:"img/04-konopnickiej-18.jpg",c:"Willa przy ul. Konopnickiej 18 — wieżyczka z dachem namiotowym i gwiazdą na czubku."},
+ g:[]},
+
+{n:5,x:578,y:175,skrz:"ul. Konopnickiej, w stronę ul. Mickiewicza",adres:"ul. Konopnickiej 24",
+ trasa:"Kieruj się na północ, w stronę ulicy Mickiewicza. Odszukaj żółtą kamienicę z metalowymi balustradami balkonów.",
+ rozp:"Żółta kamienica czynszowa z metalowymi balustradami balkonów.",
+ hist:["Ta kamienica czynszowa powstała w latach 1904–1905 z inicjatywy Carla Franka. Obiekt ma cechy neobarokowe oraz elementy secesyjne.",
+ "Pod koniec lat 70. XX wieku kamienica zmieniła wygląd — podczas remontu usunięto większość dekoracji sztukatorskiej i architektonicznej elewacji. Zachowały się natomiast piece kaflowe z XX wieku, z białych gładkich kafli glazurowanych z dekoracją floralną, oraz secesyjne malowidła ścienne.",
+ "W 2015 roku studenci Konserwacji i Restauracji Dzieł Sztuki UMK wykonali badania na obecność polichromii w sieni, korytarzu i na klatce schodowej. W 2017 roku dwie studentki w ramach pracy dyplomowej rozpoczęły prace konserwatorsko-restauratorskie malowideł. Obiekt wpisano do Rejestru Zabytków w 2017 roku — czy nadal pamiętasz, jak wygląda oznaczenie takiego obiektu? Poszukaj tabliczki na elewacji."],
+ z:[{t:"tekst",q:"Odnajdź na elewacji kobiecą twarz. W którym miejscu się znajduje?"}],
+ fh:[{s:"img/05-konopnickiej-24-projekt.jpg",c:"Projekt elewacji kamienicy z 1903 roku. Biała Karta Zabytku, APT, sygn. G1726, k. 18. Porównaj rysunek z tym, co widzisz — w latach 70. XX w. usunięto większość dekoracji."}],
+ g:["kamienica"]},
+
+{n:6,x:470,y:76,skrz:"ul. Mickiewicza",adres:"ul. Mickiewicza 60",
+ trasa:"Skręć w ulicę Mickiewicza w kierunku zachodnim. Odszukaj szarą kamienicę z rombami w oknach.",
+ rozp:"Szara kamienica z rombowymi podziałami okien i okazałym portalem bramy pośrodku fasady.",
+ hist:["Znajdujesz się na ulicy Adama Mickiewicza, jednej z głównych ulic Bydgoskiego Przedmieścia, o długości około 2,5 kilometra. W 1886 roku nazywała się Mellienstrasse — na cześć Gottlieba Melliena, prezydenta i nadburmistrza Torunia w latach 1817–1830.",
+ "Kamienica pod numerem 60 powstała w 1911 roku, zbudował ją mistrz murarski Oscar Köhm. Bramę wejściową, zlokalizowaną symetrycznie na środku fasady, zdobi okazały portal. Elewacja główna zwieńczona jest gzymsem wspartym figuralnymi konsolami z postaciami dzieci. Wykusz po lewej stronie fasady zdobiony jest figurami nereid, a nad nimi umieszczono dwa ozdobne kartusze. Obiekt wpisany jest do Rejestru Zabytków."],
+ z:[{t:"liczba",q:"Policz postaci na elewacji."},
+    {t:"tekst",q:"Czy któreś z nich nazwałbyś puttem? Zapisz, które i dlaczego."},
+    {t:"tekst",q:"Czasami budowniczowie ukrywali na ścianach datę powstania domu. Przyjrzyj się najwyższym partiom elewacji — czy udało Ci się wypatrzeć wykuty w tynku rok budowy?"}],
+ f:{s:"img/06-mickiewicza-60.jpg",c:"Kamienica przy ul. Mickiewicza 60 — romby w oknach, wykusz z nereidami, data w szczycie."},
+ g:["putto","nereida","kartusz"]},
+
+{n:7,x:310,y:76,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:null,
+ trasa:"Podążaj w kierunku zachodnim. Odnajdź ulicę Klonowica.",
+ rozp:"Narożna kamienica z wyeksponowaną cegłą i niską wieżyczką z hełmem na narożniku. Boniowany parter, powiększone okna wystawowe od strony Klonowica.",
+ hist:["Narożna kamienica, przy której się znajdujesz, pochodzi z 1891 roku. W 1936 roku właściciel powiększył okna wystawowe od strony ul. Klonowica.",
+ "Zbudowano ją w stylu nawiązującym do renesansu niderlandzkiego — w Holandii i Belgii wznoszono piękne, bogate domy handlowe z charakterystycznymi wielkimi wieżami na rogach i ozdobnymi dachami. Dolna partia budynku jest boniowana. Powyżej kamienica ma wyeksponowaną cegłę z kontrastującymi, tynkowanymi obramieniami i naczółkami okien oraz dekoracyjnymi poziomymi pasami. Narożnik zakończony jest wykuszem z niską wieżyczką z hełmem. Budynek jest wpisany do Rejestru Zabytków."],
+ z:[{t:"foto",q:"Domy w stylu niderlandzkim często miały na szczytach ozdobne chorągiewki lub flagi. Zaprojektuj herb albo flagę, która mogłaby wisieć na dachu tej toruńskiej kamienicy — użyj geometrycznych kształtów i dumnych, królewskich wzorów. Zrób zdjęcie swojego projektu."}],
+ f:{s:"img/07-mickiewicza-klonowica.jpg",c:"Narożna kamienica z 1891 roku — boniowany parter, wyeksponowana cegła, wieżyczka z hełmem. Dziś na parterze piekarnia."},
+ g:["bonie"],uw:"Paszport nie podaje numeru tego budynku. Rozpoznaj go po opisie."},
+
+{n:8,x:288,y:112,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:"ul. Mickiewicza 61",
+ trasa:"Rozejrzyj się. Odnajdź w okolicy jasną kamienicę z zielonymi balustradami balkonów.",
+ rozp:"Jasna kamienica secesyjna, asymetryczna, z licznymi balkonami i loggiami o zielonych balustradach.",
+ hist:["Kamienicę zbudował w latach 1906–1907 piekarz Peter Gehrz. Pierwotnie na parterze znajdowała się piekarnia, sklep z owocami oraz urząd pocztowy. Na piętrach powstały duże mieszkania — sześcio- i siedmiopokojowe, z odrębnym pomieszczeniem dla służby.",
+ "Styl architektoniczny budynku to secesja: bogato dekorowana malowniczymi detalami i ornamentami o miękkich kształtach. Elewacje są asymetryczne, z dużą liczbą balkonów, loggii i wykuszy, boniowane do wysokości drugiego piętra. Okna i balkony zdobią naczółki z motywami festonów. Kamienica jest wpisana do Rejestru Zabytków."],
+ z:[{t:"tekst",q:"Przejdź wzdłuż kamienicy i odszukaj świadków przeszłości — napisy na elewacji. Jakie słowa jesteś w stanie rozpoznać?"},
+    {t:"tekst",q:"Przyjrzyj się balkonom i loggiom — ich barierki są dekorowane w różny sposób. Wymień zastosowane elementy dekoracyjne."}],
+ f:{s:"img/08-mickiewicza-61.jpg",c:"Secesyjna kamienica przy ul. Mickiewicza 61 — asymetryczne elewacje, balkony, loggie i wykusze."},
+ g:["loggia","feston","bonie"]},
+
+{n:9,x:145,y:76,skrz:"Róg ul. Mickiewicza i ul. Sienkiewicza",adres:"ul. Mickiewicza 92",
+ trasa:"Kieruj się na zachód. Odszukaj skrzyżowanie z ul. Sienkiewicza.",
+ rozp:"Narożna kamienica z balkonami na metalowych balustradach; od strony Sienkiewicza wsporniki wykuszu w formie atlantów.",
+ hist:["Projekt tej kamienicy powstał w 1896 roku na zlecenie właściciela działki, piekarza Augusta Lipińskiego. W trakcie budowy dokonano poprawek — dodano między innymi balkony. W 1898 roku podjęto starania o zgodę na postawienie w przedogródku od strony ul. Sienkiewicza drewnianej altany, dziś już nieistniejącej.",
+ "W 1928 roku w budynku mieściła się restauracja Teodora Taffela „Warszawianka”. W tym samym roku powstał projekt urządzenia sklepu od strony ul. Mickiewicza, z oknem wystawowym i drzwiami wejściowymi. W 2017 roku przeprowadzono prace restauracyjno-konserwatorskie, w trakcie których odsłonięto stare napisy wskazujące na istnienie tutaj piekarni oraz cukierni pierwszego właściciela. Budynek wpisano do Rejestru Zabytków w 2019 roku."],
+ z:[{t:"tekst",q:"Obejdź budynek z każdej strony, odszukaj napisy na elewacjach i zanotuj je."},
+    {t:"liczba",q:"Po stronie od ul. Sienkiewicza odszukaj wsporniki wykuszu w formie okazałych atlantów. Ilu ich naliczysz?"}],
+ f:{s:"img/09-mickiewicza-92.jpg",c:"Kamienica przy ul. Mickiewicza 92. Na parterze odsłonięte napisy „Bäckerei & Conditorei” — ślad po piekarni i cukierni pierwszego właściciela."},
+ g:["atlant"]},
+
+{n:10,x:112,y:200,skrz:"ul. Sienkiewicza, w stronę Parku Miejskiego",adres:"ul. Sienkiewicza 15",
+ trasa:"Skręć w ulicę Sienkiewicza, w kierunku Parku Miejskiego. Odszukaj ceglany budynek.",
+ rozp:"Ceglana kamienica neogotycka z ozdobnym szczytem zwieńczonym pinaklami.",
+ hist:["Kamienica powstała około 1890 roku, wzniesiona w stylu neogotyckim. Dekorowana jest glazurowanymi, barwionymi cegłami oraz ozdobnym szczytem zwieńczonym pinaklami. Obecnie pełni funkcje usługowo-mieszkalne."],
+ z:[{t:"tekst",q:"Podejdź bliżej i przyjrzyj się cegłom. Architekt oprócz zwykłych, czerwonych użył cegły o zupełnie innym, ciemniejszym kolorze, tworząc z nich ozdobne pasy. Wymień, jakie kolory cegieł zostały wykorzystane."},
+    {t:"tekst",q:"Odszukaj na elewacji dekoracyjne elementy, między innymi strzałki. Wymień wszystkie kształty i policz, ile ich jest."}],
+ f:{s:"img/10-sienkiewicza-15.jpg",c:"Wejście do kamienicy przy ul. Sienkiewicza 15 — glazurowane cegły układają się w zygzaki i romby."},
+ fh:[{s:"img/10-sienkiewicza-15-brama.jpg",c:"Brama od strony ulicy — ceglany łuk, schody i ciemne pasy z glazurowanej cegły."}],
+ g:["pinakiel","neogotyk"]},
+
+{n:11,x:112,y:350,skrz:"ul. Sienkiewicza, przy Parku Miejskim",adres:"ul. Sienkiewicza 4",
+ trasa:"Podążaj w kierunku Parku Miejskiego. Po lewej stronie odnajdziesz budynek wzniesiony z żółto-czerwonej cegły.",
+ rozp:"Żółto-czerwona willa neogotycka ze schodkowymi szczytami.",
+ hist:["Budynek w stylu neogotyckim, zbudowany w 1901 roku dla kupca i rajcy miejskiego Emila Dietricha — według projektu Konrada Schwartza, właściciela budynku przy ul. Bydgoskiej 50-52, w którym zaczynałeś grę.",
+ "Emil prowadził spółkę Dietrich & Sohn, założoną w 1841 roku przez jego ojca Carla Benjamina — wytwórnię gwoździ i artykułów żelaznych, która od 1907 roku miała siedzibę na osiedlu Mokre, a od 1913 roku w domu towarowym przy ul. Szerokiej 35. Był zaangażowanym mieszkańcem Torunia, aktywnie uczestniczącym w Izbie Handlowej, gdzie między innymi zabiegał o doprowadzenie do Torunia kolei, co nastąpiło w 1861 roku.",
+ "Wkrótce po przyłączeniu Torunia do Polski w 1920 roku Emil wyjechał do Niemiec, a nowym właścicielem został Ignacy Ollech, kierownik spółki, która w 1921 roku przejęła firmę Dietricha. Od 1990 roku kamienica należy do Uniwersytetu Mikołaja Kopernika. W latach 1993–1994 działał tu Instytut Geografii — Zakład Geologii i Hydrogeologii, przeniesiony później do nowego budynku wydziałowego. Obecnie mieści się tu siedziba Zakładu Edukacji Artystycznej Wydziału Sztuk Pięknych."],
+ z:[{t:"liczba",q:"Spójrz na samą górę budynku — szczyty są w typie schodkowym. Policz „schodki” na jednym z głównych szczytów widocznych od ulicy, od najniższego stopnia do samego czubka. Ile jest stopni?"}],
+ f:{s:"img/11-sienkiewicza-4.jpg",c:"Willa przy ul. Sienkiewicza 4 — żółto-czerwona cegła i schodkowe szczyty. Dziś Zakład Edukacji Artystycznej UMK."},
+ fh:[{s:"img/11-sienkiewicza-4-szczyt.jpg",c:"Szczyt schodkowy z bliska — od tego zdjęcia możesz zacząć liczenie stopni."}],
+ g:["neogotyk"]},
+
+{n:12,x:285,y:415,skrz:"Róg ul. Bydgoskiej i ul. Klonowica",adres:"ul. Bydgoska 60",
+ trasa:"Kieruj się w stronę ulicy Bydgoskiej, potem na wschód — w stronę Kulturalnego hubu, przy którym zaczynałeś grę.",
+ rozp:"Narożna kamienica z kontrastem czerwonej cegły i tynkowanych pól, z wykuszem zwieńczonym wieżyczką.",
+ hist:["Kamienicę zbudowała przed 1897 rokiem toruńska firma Ulmer & Kaun według projektu berlińskich architektów Hermana Solfa i Franza Wichardsa, dla piekarza Franza Kruczkowskiego. Ci sami autorzy zaprojektowali kamienicę przy ul. Kazimierza Jagiellończyka 4. Oba budynki zostały wysoko ocenione i omówione w berlińskim czasopiśmie architektoniczno-budowlanym.",
+ "Kamienica mieściła pięcio- i siedmiopokojowe mieszkania dla zamożnych mieszczan Torunia. Na parterze zlokalizowano piekarnię oraz cukiernię pierwszego właściciela. Budynek cechuje kontrast kolorystyczny elewacji, uzyskany dzięki czerwonej cegle i otynkowanym polom. W narożu znajduje się wykusz zwieńczony wieżyczką oraz dwa szczyty w formach neorenesansowych od ul. Bydgoskiej i trzy od ul. Klonowica."],
+ z:[{t:"tekst",q:"Z karty obiektu wynika, że budynek oferował niezwykle luksusowe warunki jak na tamte czasy — mieszkania na piętrach miały od pięciu do siedmiu pokojów. Biorąc pod uwagę strukturę XIX-wiecznego społeczeństwa, dlaczego luksusowe mieszkania mieszczańskie musiały mieć aż tyle pomieszczeń? Kto oprócz właścicieli musiał się w nich pomieścić na co dzień?"},
+    {t:"wybor",q:"Berlin dyktował wtedy modę na eklektyzm i neorenesans — budynki miały wyglądać dumnie i reprezentacyjnie, niemal jak miejskie pałace nowej klasy bogatych mieszczan. Rozejrzyj się wokół tego skrzyżowania.",
+     o:["Sąsiednie kamienice trzymają zbliżoną wysokość","Kamienica pod numerem 60 wyraźnie dominuje nad otoczeniem"]}],
+ fh:[{s:"img/12-bydgoska-60.jpg",c:"Kamienica przy ul. Bydgoskiej 60 na archiwalnej fotografii — narożny wykusz z wieżyczką i neorenesansowe szczyty."}],
+ g:["eklektyzm"]}
+];
+
+/* ————— stan ————— */
+let view="start", cur=0;
+const ans={}, fotos={};
+let imie="", notatki="";
+const K=(p,i)=>p+"-"+i;
+
+/* ————— widoki ————— */
+const el=()=>document.getElementById("view");
+function show(v,i){view=v;if(i!==undefined)cur=i;render();window.scrollTo({top:0,behavior:"instant"})}
+function go(d){
+  if(view==="mapa"){show("punkt");return}
+  if(view==="punkt"){
+    if(cur+d<0){show("start");return}
+    if(cur+d>=P.length){show("koniec");return}
+    show("punkt",cur+d);return}
+  if(view==="koniec"&&d<0){show("punkt",P.length-1)}
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fig(o){return o?`<figure class="f${o.mini?" mini":""}"><img src="${o.s}" alt="${esc(o.c)}" loading="lazy">
+    <figcaption>${o.c}</figcaption></figure>`:""}
+function done(pi){const p=P[pi];return p.z.every((z,i)=>z.t==="foto"?!!fotos[K(pi,i)]:(ans[K(pi,i)]||"").trim()!=="")}
+const nDone=()=>P.filter((_,i)=>done(i)).length;
+
+function vStart(){
+  return `<div class="trasa"><b>Punkt startowy:</b> Kulturalny hub, ul. Bydgoska 50-52</div>
+  <div class="cover">
+    <p style="font-size:16.5px;text-align:left;margin:6px 0 0">Witaj, Odkrywco! Przed Tobą samodzielna gra terenowa po jednej z najpiękniejszych i najbardziej klimatycznych dzielnic Torunia. Znajdziesz tu unikalne kamienice, ryglowe konstrukcje i architektoniczne detale z przełomu XIX i XX wieku.</p>
+    ${fig({s:"img/99-pocztowka.jpg",c:"Bydgoskie Przedmieście na dawnej pocztówce — narożnik domu Konrada Schwartza przy ul. Bydgoskiej 50-52, od którego zaczyna się trasa. Źródło: fotopolska.eu."})}
+    <p class="mikro">Zasady gry</p>
+    <ol class="zasady">${ZASADY.map(z=>`<li>${z}</li>`).join("")}</ol>
+    <button class="cta" onclick="show('punkt',0)">Zacznij grę · 12 przystanków</button>
+    <button class="cta gh" onclick="show('mapa')">Zobacz trasę na mapie</button>
+    <div class="uwaga" style="text-align:left">Odpowiedzi zapisują się tylko na czas tej sesji — nie zamykaj karty w trakcie spaceru. Trasa jest pętlą: zaczynasz i kończysz przy Bydgoskiej 50.</div>
+  </div>`;
+}
+
+function vMapa(){
+  const st=P.map(p=>{
+    const d=done(p.n-1), here=p.n-1===cur;
+    return `<g class="stop" tabindex="0" role="button" aria-label="Przystanek ${p.n}, ${esc(p.adres||p.skrz)}"
+      onclick="show('punkt',${p.n-1})" onkeydown="if(event.key==='Enter')show('punkt',${p.n-1})">
+      <circle cx="${p.x}" cy="${p.y}" r="${here?16:13}" fill="${d?'#007FFF':(here?'#312D2A':'#DACDBA')}" stroke="${here?'#007FFF':'#312D2A'}" stroke-width="${here?3:1.5}"/>
+      <text x="${p.x}" y="${p.y+4.5}" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="12" font-weight="600"
+        fill="${d||here?'#fff':'#312D2A'}">${p.n}</text></g>`}).join("");
+  return `<div class="trasa">Schemat trasy · kolejność ma znaczenie</div>
+  <div class="pad">
+  <svg class="tr" viewBox="0 0 700 520" role="img" aria-label="Schemat trasy gry">
+    <g stroke="#C9BAA3" stroke-width="26" stroke-linecap="round">
+      <line x1="60" y1="76" x2="640" y2="76"/><line x1="60" y1="430" x2="660" y2="430"/>
+      <line x1="112" y1="76" x2="112" y2="430"/><line x1="300" y1="76" x2="300" y2="430"/>
+      <line x1="578" y1="76" x2="578" y2="430"/><line x1="300" y1="290" x2="640" y2="290"/>
+    </g>
+    <g font-family="ui-sans-serif,system-ui" font-size="11" fill="#8B7B65" letter-spacing="1.6">
+      <text x="352" y="60">UL. MICKIEWICZA</text>
+      <text x="360" y="470">UL. BYDGOSKA</text>
+      <text x="392" y="278">UL. KRASIŃSKIEGO</text>
+      <text x="60" y="500" fill="#5C7A4A">PARK MIEJSKI</text>
+      <text x="596" y="500" text-anchor="end" fill="#7A4A3A">→ STARÓWKA</text>
+      <text transform="rotate(-90 74 260)" x="74" y="260">UL. SIENKIEWICZA</text>
+      <text transform="rotate(-90 262 262)" x="262" y="262">UL. KLONOWICA</text>
+      <text transform="rotate(-90 540 250)" x="540" y="250">UL. KONOPNICKIEJ</text>
+    </g>
+    <ellipse cx="70" cy="474" rx="72" ry="30" fill="#CBD6BC"/>
+    <polyline fill="none" stroke="#312D2A" stroke-width="2" stroke-dasharray="6 6" opacity=".45"
+      points="${P.map(p=>p.x+","+p.y).join(" ")} 430,430"/>
+    ${st}
+  </svg>
+  <div class="legend">
+    <span><i style="background:#312D2A"></i>tu jesteś</span>
+    <span><i style="background:#007FFF"></i>zrobione</span>
+    <span><i style="background:#DACDBA;border:1px solid #312D2A"></i>przed Tobą</span>
+  </div>
+  <button class="cta" onclick="show('punkt')">Wróć do przystanku ${cur+1}</button>
+  </div>`;
+}
+
+function vPunkt(){
+  const p=P[cur], pi=cur;
+  const zad=p.z.map((z,i)=>{
+    const k=K(pi,i), v=esc(ans[k]||"");
+    let f="";
+    if(z.t==="liczba")f=`<input type="number" inputmode="numeric" placeholder="wpisz liczbę" value="${v}" oninput="ans['${k}']=this.value;bump()">`;
+    else if(z.t==="tekst")f=`<textarea placeholder="Twoja odpowiedź…" oninput="ans['${k}']=this.value;bump()">${v}</textarea>`;
+    else if(z.t==="wybor")f=`<div class="wyb">${z.o.map(o=>`<button aria-pressed="${ans[k]===o}" onclick="ans['${k}']=${JSON.stringify(o).replace(/"/g,'&quot;')};render()">${o}</button>`).join("")}</div>`;
+    else if(z.t==="foto")f=`<div class="foto">
+        <label>${fotos[k]?"Zmień zdjęcie":"Zrób zdjęcie"}<input type="file" accept="image/*" capture="environment" onchange="pic('${k}',this)"></label>
+        ${fotos[k]?`<img src="${fotos[k]}" alt="Twój rysunek"><button class="del" onclick="delpic('${k}')">usuń</button>`:""}</div>`;
+    return `<div class="q"><span class="qn">Zadanie ${i+1} z ${p.z.length}</span><p>${z.q}</p>${f}</div>`;
+  }).join("");
+  const slow=p.g.length?`<div class="slow"><b>Słowniczek</b><dl>${p.g.map(g=>`<dt>${g[0].toUpperCase()+g.slice(1)}</dt><dd>${G[g]}</dd>`).join("")}</dl></div>`:"";
+  const q=encodeURIComponent((p.adres||p.skrz)+", Toruń");
+  return `<div class="trasa"><b>Trasa:</b> ${p.trasa}</div>
+  <div class="pad">
+    <p class="addr">Przystanek ${p.n} z 12${p.adres?" · "+p.adres:""}</p>
+    <h2 class="pt">${p.skrz}</h2>
+    <div class="rozp"><b>Jak rozpoznać budynek</b>${p.rozp}${p.uw?`<br><span style="color:var(--ceg)">${p.uw}</span>`:""}
+      ${p.f?`<details class="pod"><summary>Nie mogę znaleźć — pokaż zdjęcie</summary>${fig(p.f)}</details>`:""}</div>
+    <a class="cta gh" style="text-decoration:none;text-align:center" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/search/?api=1&query=${q}">Otwórz w mapach</a>
+    <details class="rys"><summary>Jestem na miejscu — pokaż historię</summary>
+      <p class="mikro">Rys historyczny budynku</p>
+      <div class="hist">${p.hist.map(h=>`<p>${h}</p>`).join("")}</div>
+      ${(p.fh||[]).map(fig).join("")}
+    </details>
+    <p class="mikro">Kącik detektywa</p>
+    <div class="zad">${zad}</div>
+    ${slow}
+  </div>`;
+}
+
+function vKoniec(){
+  const rows=P.map((p,pi)=>p.z.map((z,i)=>{
+    const k=K(pi,i), v=(ans[k]||"").trim();
+    const val=z.t==="foto"?(fotos[k]?`<img src="${fotos[k]}" alt="rysunek">`:`<span class="pusto">bez zdjęcia</span>`)
+      :(v?esc(v):`<span class="pusto">brak odpowiedzi</span>`);
+    return `<div class="sumq"><div class="k">${p.n}. ${esc(p.adres||p.skrz)}</div><div class="v">${val}</div></div>`;
+  }).join("")).join("");
+  return `<div class="trasa"><b>Trasa:</b> udaj się w miejsce startu gry — ul. Bydgoska 50</div>
+  <div class="pad">
+    <h2 class="pt">Ostatnia misja</h2>
+    <p>Twoje wielkie śledztwo pośród tajemniczych kamienic i ukrytych symboli dobiegło końca. Udało Ci się rozszyfrować wszystkie zagadki!</p>
+    <p>Udaj się do recepcji Kulturalnego hubu Bydgoskiego Przedmieścia i przedstaw odpowiedzi na wszystkie napotkane po drodze pytania. Czeka tam na Ciebie zasłużona nagroda Mistrza Historii Bydgoskiego Przedmieścia. Dziękujemy za wspólną podróż przez historię i architekturę Bydgoskiego Przedmieścia!</p>
+    <p>Oddanie paszportu to świetny moment, żeby sprawdzić, co jeszcze przygotowaliśmy na te wakacje. Wpadnij do hubu na kreatywne warsztaty plastyczne, letnie wieczory bajkowe albo pełne śmiechu zabawy na świeżym powietrzu. Zapytaj w recepcji o ofertę wakacyjną — czekamy codziennie.</p>
+    ${fig({s:"img/99-hub-wnetrze.jpg",c:"Hol Kulturalnego hubu po remoncie — ten sam, który widziałeś na rycinie z epoki na pierwszym przystanku."})}
+
+    <div class="cert">
+      <h3>Certyfikat Odkrywcy<br>Bydgoskiego Przedmieścia</h3>
+      <p class="sub">Kulturalny hub · ul. Bydgoska 50</p>
+      <p class="txt">Za udział i rozwiązanie wszystkich zagadek w grze miejskiej „Paszport Odkrywcy Bydgoskiego Przedmieścia”, zorganizowanej w ramach wakacji w Kulturalnym hubie Bydgoskiego Przedmieścia w Toruniu.</p>
+      <p class="txt">Oficjalnie ogłaszam, że ja, Detektyw:</p>
+      <input type="text" placeholder="Twoje imię" value="${esc(imie)}" oninput="imie=this.value">
+      <p class="cap">Imię Odkrywcy</p>
+      <p class="txt">przeszedłem zakątki Bydgoskiego Przedmieścia, odkryłem tajemnice dawnych architektów, poznałem niesamowite losy mieszkańców i od dziś noszę tytuł <b>Mistrza Historii</b> tej części Torunia!</p>
+      <p style="font-size:15px;margin:0">Ukończono ${nDone()} z 12 przystanków</p>
+    </div>
+
+    <div class="uwaga">Odpowiedzi sprawdza recepcja hubu — ta strona ich nie ocenia. Pokaż poniższe podsumowanie przy odbiorze nagrody.</div>
+    <p class="mikro">Twoje odpowiedzi</p>
+    <div class="sumbox">${rows}</div>
+
+    <p class="mikro">Notes Odkrywcy</p>
+    <p style="font-size:14.5px;margin:0 0 8px">Miejsce na Twoje dodatkowe spostrzeżenia, uwagi i notatki z trasy.</p>
+    <textarea placeholder="Co jeszcze zwróciło Twoją uwagę?" oninput="notatki=this.value">${esc(notatki)}</textarea>
+
+    <details class="rys" style="margin-top:18px"><summary>Skąd to wiemy — źródła</summary>
+      <div class="zrodla">
+        <b>Netografia</b>
+        toruntour.pl · fotopolska.eu · zabytek.pl (Białe Karty Zabytków) · nid.pl/zasoby/rejestr-zabytkow-zasoby ·
+        gov.pl/web/wuoz-olsztyn/znak-zabytek-chroniony-prawem · stotom.wordpress.com · pl.wikipedia.org · tak.torun.pl/hub
+        <b>Ikonografia</b>
+        Fotografie i pocztówki archiwalne: fotopolska.eu, toruntour.pl.
+        Portret Konrada Schwartza: archiwum rodzinne Eda Grube, za nowosci.com.pl.
+        Projekt elewacji kamienicy przy ul. Konopnickiej 24 z 1903 r.: Biała Karta Zabytku, Archiwum Państwowe w Toruniu, sygn. G1726, k. 18.
+        Rycina holu domu Schwartza: „Diele des Landhauses Schwartz in Thorn”, architekci Erdmann &amp; Spindler, Berlin.
+        <b>Treść</b>
+        Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia. Opracowanie: Zuzanna Falleńczyk.
+      </div>
+    </details>
+
+    <button class="cta gh" onclick="show('punkt',0)">Wróć do trasy</button>
+  </div>`;
+}
+
+function render(){
+  const v=document.getElementById("view");
+  v.innerHTML=view==="start"?vStart():view==="mapa"?vMapa():view==="punkt"?vPunkt():vKoniec();
+  const nav=document.getElementById("nav");
+  nav.hidden=(view==="start");
+  if(!nav.hidden){
+    document.getElementById("midn").textContent=view==="punkt"?(cur+1):"—";
+    document.getElementById("bPrev").textContent=view==="mapa"?"← Przystanek":"← Wstecz";
+    document.getElementById("bNext").textContent=view==="punkt"&&cur===P.length-1?"Zakończ →":(view==="koniec"?"—":"Dalej →");
+    document.getElementById("bNext").disabled=(view==="koniec");
+    bump();
+  }
+  document.getElementById("stopka").innerHTML=
+    "Treść gry: Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia · opracowanie Zuzanna Falleńczyk<br>Wersja cyfrowa: demo techniczne, Fundacja Lucid Academy";
+}
+function bump(){const b=document.getElementById("progbar");if(b)b.style.width=(nDone()/P.length*100)+"%"}
+function pic(k,inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  const r=new FileReader();r.onload=e=>{fotos[k]=e.target.result;render()};r.readAsDataURL(f);
+}
+function delpic(k){delete fotos[k];render()}
+render();
+</script>
