@@ -135,6 +135,14 @@ svg.tr{display:block;width:100%;height:auto;background:var(--pap2);border:1px so
 .uwaga{background:var(--pap2);border-left:3px solid var(--ceg);padding:11px 13px;font-size:14.5px;margin:16px 0}
 .stopka{font-family:var(--util);font-size:9.5px;letter-spacing:.08em;color:var(--ink3);text-align:center;
   padding:26px 18px 0;line-height:1.8}
+.stopka p{margin:0}
+.sygnwrap{border-top:1px solid var(--pap3);margin:15px 18px 0;padding-top:15px}
+a.sygn{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink3)}
+a.sygn img{width:52px;height:36px;object-fit:contain;display:block;flex:0 0 52px}
+a.sygn span{text-align:left;line-height:1.75}
+a.sygn b{color:var(--ink2);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+a.sygn u{text-decoration:none;border-bottom:1px solid var(--pap3)}
+a.sygn:hover u{border-bottom-color:var(--ink3)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -145,7 +153,7 @@ svg.tr{display:block;width:100%;height:auto;background:var(--pap2);border:1px so
     <p class="strip">Historia · Architektura · Sztuka</p>
   </div>
   <div id="view"></div>
-  <p class="stopka" id="stopka"></p>
+  <div class="stopka" id="stopka"></div>
 </div>
 
 <nav class="nav" id="nav" hidden>
@@ -526,6 +534,9 @@ function vKoniec(){
         Rycina holu domu Schwartza: „Diele des Landhauses Schwartz in Thorn”, architekci Erdmann &amp; Spindler, Berlin.
         <b>Treść</b>
         Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia. Opracowanie: Zuzanna Falleńczyk.
+        <b>Wersja cyfrowa</b>
+        Fundacja Lucid Academy — <a href="https://lucidacademy.pl" target="_blank" rel="noopener">lucidacademy.pl</a>.
+        Robimy cyfrowe narzędzia dla miast, instytucji kultury i szkół.
       </div>
     </details>
 
@@ -548,7 +559,11 @@ function render(){
     bump();
   }
   document.getElementById("stopka").innerHTML=
-    "Treść gry: Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia · opracowanie Zuzanna Falleńczyk<br>Wersja cyfrowa: demo techniczne, Fundacja Lucid Academy";
+    `<p>Treść gry: Toruńska Agenda Kulturalna · Kulturalny hub Bydgoskiego Przedmieścia<br>opracowanie: Zuzanna Falleńczyk</p>
+     <div class="sygnwrap"><a class="sygn" href="https://lucidacademy.pl" target="_blank" rel="noopener">
+       <img src="img/lucid-academy.png" alt="Lucid Academy" width="52" height="36">
+       <span>Wersja cyfrowa: demo techniczne<br><b>Fundacja Lucid Academy</b><br><u>lucidacademy.pl</u></span>
+     </a></div>`;
 }
 function bump(){const b=document.getElementById("progbar");if(b)b.style.width=(nDone()/P.length*100)+"%"}
 /* Zdjęcie z aparatu ma 2–5 MB; miniaturka w podsumowaniu ma 76 px. Zmniejszamy do
