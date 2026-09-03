@@ -47,3 +47,10 @@ ul. Konopnickiej 24 z 1903 r. — Archiwum Państwowe w Toruniu, sygn. G1726, k.
 Pełna lista źródeł znajduje się w samej grze, na ekranie końcowym.
 
 Wersja cyfrowa (demo techniczne): **Fundacja Lucid Academy**.
+
+## Kod QR
+
+W katalogu `qr/` leżą gotowe kody prowadzące pod adres gry — w wersji czarno-białej
+(uniwersalnej) i w kolorach paszportu. Każdy w dwóch formatach: `.svg` do druku
+w dowolnym rozmiarze i `.png` 2000 px do wklejenia w Wordzie albo Canvie.
+Korekcja błędów Q (25%), więc kod zadziała nawet częściowo zabrudzony lub zasłonięty.
