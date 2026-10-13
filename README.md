@@ -58,7 +58,12 @@ Robimy cyfrowe narzędzia dla miast, instytucji kultury i szkół.
 
 ## Kod QR
 
-W katalogu `qr/` leżą gotowe kody prowadzące pod adres gry — w wersji czarno-białej
-(uniwersalnej) i w kolorach paszportu. Każdy w dwóch formatach: `.svg` do druku
-w dowolnym rozmiarze i `.png` 2000 px do wklejenia w Wordzie albo Canvie.
-Korekcja błędów Q (25%), więc kod zadziała nawet częściowo zabrudzony lub zasłonięty.
+W katalogu `qr/` leżą gotowe kody — w wersji czarno-białej (uniwersalnej) i w kolorach
+paszportu. Każdy w dwóch formatach: `.svg` do druku w dowolnym rozmiarze i `.png`
+2000 px do wklejenia w Wordzie albo Canvie. Korekcja błędów Q (25%), więc kod
+zadziała nawet częściowo zabrudzony lub zasłonięty.
+
+Kody prowadzą pod adres docelowy **https://lucidacademy.pl/projekty/paszport/**.
+Zanim trafią do druku, ten adres musi działać — dopóki gra stoi tylko na GitHub
+Pages, zeskanowanie kodu da 404. Po każdej zmianie adresu kody trzeba wygenerować
+od nowa (`segno`, korekcja Q, margines 4 moduły).
