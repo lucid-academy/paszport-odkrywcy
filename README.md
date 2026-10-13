@@ -31,9 +31,16 @@ Pętla zaczynająca się i kończąca przy Kulturalnym hubie (ul. Bydgoska 50-52
 | --- | --- |
 | `docs/index.html` | gra (wersja serwowana przez GitHub Pages) |
 | `docs/img/` | fotografie i materiał archiwalny |
-| `docs/paszport-odkrywcy-offline.html` | ta sama gra w jednym pliku, ze zdjęciami wbudowanymi w HTML — do wysłania mailem albo wgrania na tablet bez internetu |
+| `docs/paszport-odkrywcy-offline.html` | ta sama gra w jednym pliku, ze zdjęciami wbudowanymi w HTML — do wysłania mailem albo wgrania na urządzenie bez internetu |
+| `narzedzia/zbuduj-offline.py` | przebudowuje plik offline z `docs/index.html` |
 
-Bez zależności, bez procesu budowania — zwykły plik HTML.
+Gra nie ma zależności ani procesu budowania — to zwykły plik HTML. Jedyny wyjątek to
+wersja offline, którą trzeba przebudować po każdej zmianie w `docs/index.html`
+albo w `docs/img/`:
+
+```
+python3 narzedzia/zbuduj-offline.py
+```
 
 ## Źródła i prawa
 

@@ -168,156 +168,160 @@ a.sygn:hover u{border-bottom-color:var(--ink3)}
 <script>
 /* ————— treść gry ————— */
 const ZASADY=[
-"Gra nie wymaga aplikacji ani przewodnika — wystarczysz Ty i oczy szeroko otwarte.",
-"Twoim zadaniem jest dotarcie w okolice wskazanych skrzyżowań lub ulic, a następnie odnalezienie konkretnego budynku na podstawie wskazówek. Szukaj rzeźb, detali lub tablic rejestru zabytków.",
+"Gra nie wymaga aplikacji ani przewodnika — wystarczysz Ty i oczy szeroko otwarte.",
+"Twoim zadaniem jest dotarcie w okolice wskazanych skrzyżowań lub ulic, a następnie odnalezienie konkretnego budynku na podstawie wskazówek. Szukaj rzeźb, detali lub tablic rejestru zabytków.",
 "Dopiero gdy będziesz pewien, że stoisz przed właściwym obiektem, odsłoń historię budynku.",
-"Na każdym przystanku czeka zestaw pytań. Odpowiedzi zapisujesz tutaj — na końcu pokażesz je w recepcji hubu.",
+"Na każdym przystanku czeka zestaw pytań. Odpowiedzi zapisujesz tutaj — na końcu pokażesz je w recepcji hubu.",
 "Powodzenia!"];
 
 const G={ // słowniczek
- szachulec:"Typ budowli drewnianej, w której pola między belkami wypełnia się innym materiałem — u nas cegłą.",
- eklektyzm:"Styl łączący elementy różnych stylów architektonicznych w spójną całość.",
+ szachulec:"Typ budowli drewnianej, w której pola między belkami wypełnia się innym materiałem — u nas cegłą.",
+ eklektyzm:"Styl łączący elementy różnych stylów architektonicznych w spójną całość.",
  putto:"Motyw dekoracyjny: mały nagi chłopiec albo sama jego głowa, często uskrzydlony.",
- nereida:"W mitologii greckiej nimfa morska, córka Nereusa i Doris.",
+ nereida:"W mitologii greckiej nimfa morska, córka Nereusa i Doris.",
  kartusz:"Ozdobne obramowanie tarczy herbowej, monogramu, napisu lub malowidła.",
- bonie:"Dekoracyjna technika wykończenia elewacji — kamienne lub tynkowe pasy w dolnej partii budynku.",
- loggia:"Wnęka w ścianie budynku. W przeciwieństwie do balkonu nie wystaje poza bryłę, jest zadaszona i osłonięta z trzech stron.",
- feston:"Ozdobne przedstawienie zwieszającej się tkaniny, wieńca z kwiatów, roślin lub owoców.",
+ bonie:"Dekoracyjna technika wykończenia elewacji — kamienne lub tynkowe pasy w dolnej partii budynku.",
+ loggia:"Wnęka w ścianie budynku. W przeciwieństwie do balkonu nie wystaje poza bryłę, jest zadaszona i osłonięta z trzech stron.",
+ feston:"Ozdobne przedstawienie zwieszającej się tkaniny, wieńca z kwiatów, roślin lub owoców.",
  atlant:"Postać mężczyzny podtrzymującego głową, barkami lub rękami element architektoniczny. Żeński odpowiednik to kariatyda.",
- pinakiel:"Pionowy element dekoracyjny w formie smukłej wieżyczki zakończonej iglicą. Inaczej fiala lub sterczyna.",
- neogotyk:"Styl nawiązujący do gotyku, powstały ok. połowy XVIII w. w Anglii, trwający do początku XX w.",
- kamienica:"Kamienica czynszowa: okazały budynek mieszkalny, w którym lokale przeznaczono na wynajem. Szczyt popularności na przełomie XIX i XX w."
+ pinakiel:"Pionowy element dekoracyjny w formie smukłej wieżyczki zakończonej iglicą. Inaczej fiala lub sterczyna.",
+ neogotyk:"Styl nawiązujący do gotyku, powstały ok. połowy XVIII w. w Anglii, trwający do początku XX w.",
+ kamienica:"Kamienica czynszowa: okazały budynek mieszkalny, w którym lokale przeznaczono na wynajem. Szczyt popularności na przełomie XIX i XX w."
 };
 
 const P=[
-{n:1,x:430,y:430,skrz:"ul. Bydgoska 50-52",adres:"ul. Bydgoska 50-52",
+{n:1,x:430,y:430,skrz:"ul. Bydgoska 50-52",adres:"ul. Bydgoska 50-52",
  trasa:"Punkt startowy — Kulturalny hub",
- rozp:"Stoisz przed hubem. To ten budynek z konstrukcją ryglową i narożnym wykuszem.",
- hist:["Czy wiesz, że budynek, przed którym stoisz, ma ponad 120 lat i skrywa niesamowitą historię? To dzieło oraz dom rodzinny Konrada Schwartza — niezwykle zdolnego budowniczego. W części z numerem 50 zamieszkał sam ze swoją żoną Gabrielą, córką dawnego burmistrza Torunia, a w numerze 52 urządził luksusowe mieszkania.",
- "Przez wiele lat ludzie myśleli, że historia pana Konrada skończyła się przed II wojną światową. Niedawno odkryto jednak niesamowitą prawdę. Kiedy w Niemczech do władzy doszedł Adolf Hitler, zięć pana Konrada — mąż jego najstarszej córki Anny — został ważnym politykiem. Pan Konrad i jego córka byli tak odważni i prawi, że nie dali się oszukać złym ideom. Rozmawiali z nim tak długo, aż zięć zrozumiał swój błąd, sprzeciwił się Hitlerowi i musiał uciekać przed niebezpieczeństwem aż do Ameryki. Sam pan Konrad został w Toruniu i podczas wojny potajemnie pomagał prześladowanym ludziom.",
- "Po wojnie budynek przybierał nowe oblicza. Czy potrafisz sobie wyobrazić, że w tych pięknych salach mieścił się przez jakiś czas posterunek milicji? Później wprowadzili się tu studenci do akademika Uniwersytetu Mikołaja Kopernika, a w jednym z mieszkań żył słynny architekt Zbigniew Wahl, który zaprojektował toruński dworzec autobusowy.",
- "Dom pana Konrada przez lata zaniedbań niszczał i prawie zamienił się w ruinę. Dzisiaj, po wielkim i trudnym remoncie, znów tętni życiem. W części pod numerem 50 powstał Kulturalny hub Bydgoskiego Przedmieścia, dzielący przestrzeń z Książnicą Kopernikańską. W numerze 52 siedzibę znalazły Zakład Aktywności Zawodowej, Dzienny Dom Pobytu Seniora oraz Toruńskie Laboratorium Miejskie."],
- z:[{t:"tekst",q:"Rozejrzyj się wokół wejścia do Kulturalnego hubu. Jak myślisz, które elementy budynku pamiętają jeszcze czasy pana Konrada, a które wyglądają na zupełnie nowe?"},
+ rozp:"Stoisz przed hubem. To ten budynek z konstrukcją ryglową i narożnym wykuszem.",
+ hist:["Czy wiesz, że budynek, przed którym stoisz, ma ponad 120 lat i skrywa niesamowitą historię? To dzieło oraz dom rodzinny Konrada Schwartza — niezwykle zdolnego budowniczego. W części z numerem 50 zamieszkał sam ze swoją żoną Gabrielą, córką dawnego burmistrza Torunia, a w numerze 52 urządził luksusowe mieszkania.",
+ "Przez wiele lat ludzie myśleli, że historia pana Konrada skończyła się przed II wojną światową. Niedawno odkryto jednak niesamowitą prawdę. Kiedy w Niemczech do władzy doszedł Adolf Hitler, zięć pana Konrada — mąż jego najstarszej córki Anny — został ważnym politykiem. Pan Konrad i jego córka byli tak odważni i prawi, że nie dali się oszukać złym ideom. Rozmawiali z nim tak długo, aż zięć zrozumiał swój błąd, sprzeciwił się Hitlerowi i musiał uciekać przed niebezpieczeństwem aż do Ameryki. Sam pan Konrad został w Toruniu i podczas wojny potajemnie pomagał prześladowanym ludziom.",
+ "Po wojnie budynek przybierał nowe oblicza. Czy potrafisz sobie wyobrazić, że w tych pięknych salach mieścił się przez jakiś czas posterunek milicji? Później wprowadzili się tu studenci do akademika Uniwersytetu Mikołaja Kopernika, a w jednym z mieszkań żył słynny architekt Zbigniew Wahl, który zaprojektował toruński dworzec autobusowy.",
+ "Dom pana Konrada przez lata zaniedbań niszczał i prawie zamienił się w ruinę. Dzisiaj, po wielkim i trudnym remoncie, znów tętni życiem. W części pod numerem 50 powstał Kulturalny hub Bydgoskiego Przedmieścia, dzielący przestrzeń z Książnicą Kopernikańską. W numerze 52 siedzibę znalazły Zakład Aktywności Zawodowej, Dzienny Dom Pobytu Seniora oraz Toruńskie Laboratorium Miejskie."],
+ z:[{t:"tekst",q:"Rozejrzyj się wokół wejścia do Kulturalnego hubu. Jak myślisz, które elementy budynku pamiętają jeszcze czasy pana Konrada, a które wyglądają na zupełnie nowe?"},
     {t:"liczba",q:"Policz, ile dużych okien znajduje się na parterze kamienicy pod numerem 50-52. To Twój pierwszy zdobyty klucz do zagadek Bydgoskiego Przedmieścia."}],
- f:{s:"img/01-hub-dzis.jpg",c:"Kulturalny hub, ul. Bydgoska 50-52 — stan dzisiejszy."},
- fh:[{s:"img/01-hub-dawniej.jpg",c:"Dom Konrada Schwartza na fotografii z epoki."},
-     {s:"img/01-konrad-schwartz.jpg",c:"Konrad Schwartz. Fot. z archiwum rodzinnego Eda Grube, za nowosci.com.pl."},
-     {s:"img/01-hol-rycina.jpg",c:"„Diele des Landhauses Schwartz in Thorn” — hol domu na rycinie z epoki. Ten sam hol zobaczysz dziś, wchodząc do hubu."}],
+ f:{s:"img/01-hub-dzis.jpg",c:"Kulturalny hub, ul. Bydgoska 50-52 — stan dzisiejszy."},
+ fh:[{s:"img/01-hub-dawniej.jpg",c:"Dom Konrada Schwartza na fotografii z epoki."},
+     {s:"img/01-konrad-schwartz.jpg",c:"Konrad Schwartz. Fot. z archiwum rodzinnego Eda Grube, za nowosci.com.pl."},
+     {s:"img/01-hol-rycina.jpg",c:"„Diele des Landhauses Schwartz in Thorn” — hol domu na rycinie z epoki. Ten sam hol zobaczysz dziś, wchodząc do hubu."}],
  g:[]},
 
-{n:2,x:540,y:412,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 42",
- trasa:"Kieruj się na wschód, w stronę zespołu staromiejskiego. Bądź czujny — kolejny punkt jest bliżej, niż myślisz. Jeśli dopisze Ci szczęście, u celu ujrzysz trzy żabie murale lokalnego artysty, Andrzeja Po Prostu.",
- rozp:"Murowana kamienica narożna z przedogródkiem — pasem zieleni od strony ulicy Bydgoskiej.",
- hist:["Kamienica znajduje się w obszarze, który prężnie rozwijał się w drugiej połowie XIX wieku. W 1871 roku Toruń został podniesiony do rangi twierdzy I kategorii, co poskutkowało zakazem budowania na Bydgoskim Przedmieściu zabudowy innej niż drewniana. Rozejrzyj się — wokół wciąż stoi drewniana zabudowa, świadek tej części historii miasta. Prawo zniesiono w 1909 roku, dając tym samym początek kamienicy, przed którą stoisz. W marcu 1909 roku piekarz Gustaw Sodtke podjął decyzję o jej wybudowaniu.",
- "Prawo narzucało konieczność stworzenia przed budynkiem tak zwanego przedogródka, czyli niezabudowanego pasa zieleni od strony ulicy. Czy jesteś w stanie go odnaleźć? Od początku kamienica miała dwie funkcje: mieszkalną i usługową. Na parterze mieściła się między innymi piekarnia właściciela z wielkim piecem i elektryczną ugniatarką do ciasta. Projekt zakładał również pralnię i stajnię.",
- "Czy wiesz, w jaki sposób chronione są zabytki w Polsce? Jedną z form ochrony jest Rejestr zabytków. Kamienicę wpisano do niego 8 września 2015 roku pod numerem A/1679. Litera A nie jest przypadkowa — dokumentację prowadzi się w trzech zbiorach: A dla zabytków nieruchomych, B dla ruchomych, C dla archeologicznych. Omawiany wcześniej budynek przy Bydgoskiej 50-52 też jest w rejestrze — wpis pochodzi z 1983 roku. Szukaj na elewacjach Błękitnej Tarczy, międzynarodowego symbolu ochrony zabytków."],
- z:[{t:"liczba",q:"Przejdź wzdłuż elewacji przy ul. Bydgoskiej oraz Konopnickiej. Policz drzwi wejściowe."},
-    {t:"tekst",q:"Zapamiętaj i zapisz, jakie dekoracje zdobią te drzwi."}],
- fh:[{s:"img/02-parkstrasse.jpg",c:"„Thorn — Parkstrasse (Bromberger Vorstadt)”: dzisiejsza ul. Konopnickiej na dawnej pocztówce. Źródło: fotopolska.eu."},
+{n:2,x:540,y:412,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 42",
+ trasa:"Kieruj się na wschód, w stronę zespołu staromiejskiego. Bądź czujny — kolejny punkt jest bliżej, niż myślisz. Jeśli dopisze Ci szczęście, u celu ujrzysz trzy żabie murale lokalnego artysty, Andrzeja Po Prostu.",
+ rozp:"Murowana kamienica narożna z przedogródkiem — pasem zieleni od strony ulicy Bydgoskiej.",
+ hist:["Kamienica znajduje się w obszarze, który prężnie rozwijał się w drugiej połowie XIX wieku. W 1871 roku Toruń został podniesiony do rangi twierdzy I kategorii, co poskutkowało zakazem budowania na Bydgoskim Przedmieściu zabudowy innej niż drewniana. Rozejrzyj się — wokół wciąż stoi drewniana zabudowa, świadek tej części historii miasta. Prawo zniesiono w 1909 roku, dając tym samym początek kamienicy, przed którą stoisz. W marcu 1909 roku piekarz Gustaw Sodtke podjął decyzję o jej wybudowaniu.",
+ "Prawo narzucało konieczność stworzenia przed budynkiem tak zwanego przedogródka, czyli niezabudowanego pasa zieleni od strony ulicy. Czy jesteś w stanie go odnaleźć? Od początku kamienica miała dwie funkcje: mieszkalną i usługową. Na parterze mieściła się między innymi piekarnia właściciela z wielkim piecem i elektryczną ugniatarką do ciasta. Projekt zakładał również pralnię i stajnię.",
+ "Czy wiesz, w jaki sposób chronione są zabytki w Polsce? Jedną z form ochrony jest Rejestr zabytków. Kamienicę wpisano do niego 8 września 2015 roku pod numerem A/1679. Litera A nie jest przypadkowa — dokumentację prowadzi się w trzech zbiorach: A dla zabytków nieruchomych, B dla ruchomych, C dla archeologicznych. Omawiany wcześniej budynek przy Bydgoskiej 50-52 też jest w rejestrze — wpis pochodzi z 1983 roku. Szukaj na elewacjach Błękitnej Tarczy, międzynarodowego symbolu ochrony zabytków."],
+ z:[{t:"liczba",q:"Przejdź wzdłuż elewacji przy ul. Bydgoskiej oraz Konopnickiej. Policz drzwi wejściowe."},
+    {t:"tekst",q:"Zapamiętaj i zapisz, jakie dekoracje zdobią te drzwi."}],
+ f:{s:"img/02-bydgoska-42.jpg",c:"Kamienica przy ul. Bydgoskiej 42 — stan dzisiejszy. Szczyt z ciemnymi belkami na jasnym tynku, balkony od strony ulicy."},
+ fh:[{s:"img/02-parkstrasse.jpg",c:"„Thorn — Parkstrasse (Bromberger Vorstadt)”: dzisiejsza ul. Konopnickiej na dawnej pocztówce. Źródło: fotopolska.eu."},
      {s:"img/blekitna-tarcza.png",mini:1,c:"Błękitna Tarcza — międzynarodowy znak ochrony zabytków. Takiej tabliczki szukaj na elewacjach."}],
  g:["kamienica"]},
 
-{n:3,x:568,y:452,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 40",
- trasa:"Rozejrzyj się. Odszukaj drewniany budynek naprzeciwko miejsca, w którym stoisz.",
- rozp:"Drewniana willa w konstrukcji szachulcowej, z ciemnymi belkami na jasnym tynku i wieżyczką.",
- hist:["Czy pamiętasz informacje z poprzedniego przystanku? Stoisz właśnie pod zabytkiem będącym idealnym przykładem budownictwa drewnianego wznoszonego w latach 1871–1909. Projektem zajęła się firma budowlana Houterman & Walter, a pozwolenie na budowę wydano w grudniu 1895 roku.",
- "Budynek wzniesiono w stylu eklektycznym, w konstrukcji szachulcowej z wypełnieniem ceglanym. Do Rejestru Zabytków trafił w 1983 roku."],
- z:[{t:"liczba",q:"Drewniane belki na jasnym tynku tworzą niesamowite wzory. Przyjrzyj się frontowej ścianie willi i znajdź belki krzyżujące się w wielkie litery X — to Krzyże Świętego Andrzeja. Ile ich naliczysz na całej przedniej ścianie?"},
-    {t:"foto",q:"Willa ma przepiękne drewniane balustrady na balkonach i werandach. Przerysuj fragment barierki albo stwórz własny wzór z kresek, który pasowałby do tego domu — i zrób zdjęcie swojego rysunku."}],
- f:{s:"img/03-bydgoska-40.jpg",c:"Willa przy ul. Bydgoskiej 40 — konstrukcja szachulcowa z wypełnieniem ceglanym."},
+{n:3,x:568,y:452,skrz:"Róg ul. Bydgoskiej i ul. Konopnickiej",adres:"ul. Bydgoska 40",
+ trasa:"Rozejrzyj się. Odszukaj drewniany budynek naprzeciwko miejsca, w którym stoisz.",
+ rozp:"Drewniana willa w konstrukcji szachulcowej, z ciemnymi belkami na jasnym tynku i wieżyczką.",
+ hist:["Czy pamiętasz informacje z poprzedniego przystanku? Stoisz właśnie pod zabytkiem będącym idealnym przykładem budownictwa drewnianego wznoszonego w latach 1871–1909. Projektem zajęła się firma budowlana Houterman & Walter, a pozwolenie na budowę wydano w grudniu 1895 roku.",
+ "Budynek wzniesiono w stylu eklektycznym, w konstrukcji szachulcowej z wypełnieniem ceglanym. Do Rejestru Zabytków trafił w 1983 roku."],
+ z:[{t:"liczba",q:"Drewniane belki na jasnym tynku tworzą niesamowite wzory. Przyjrzyj się frontowej ścianie willi i znajdź belki krzyżujące się w wielkie litery X — to Krzyże Świętego Andrzeja. Ile ich naliczysz na całej przedniej ścianie?"},
+    {t:"foto",q:"Willa ma przepiękne drewniane balustrady na balkonach i werandach. Przerysuj fragment barierki albo stwórz własny wzór z kresek, który pasowałby do tego domu — i zrób zdjęcie swojego rysunku."}],
+ f:{s:"img/03-bydgoska-40.jpg",c:"Willa przy ul. Bydgoskiej 40 — konstrukcja szachulcowa z wypełnieniem ceglanym."},
  g:["szachulec","eklektyzm"]},
 
-{n:4,x:578,y:282,skrz:"Róg ul. Konopnickiej i ul. Krasińskiego",adres:"ul. Konopnickiej 18",
+{n:4,x:578,y:282,skrz:"Róg ul. Konopnickiej i ul. Krasińskiego",adres:"ul. Konopnickiej 18",
  trasa:"Kieruj się na północ.",
- rozp:"Willa o złożonej bryle, z narożną wieżyczką krytą dachem namiotowym i zielonymi okiennicami.",
- hist:["W 1900 roku firma Houtermans & Walter rozpoczyna budowę domu — to ta sama firma, która projektowała budynek przy ul. Bydgoskiej 40. Po ukończeniu budowy zamieszkała w nim jedna rodzina. Po II wojnie światowej w willi wydzielono cztery odrębne mieszkania.",
- "Główne wejście znajduje się od strony ulicy Konopnickiej — czy potrafisz je odnaleźć? Zwróć uwagę na złożoność bryły i detale: balkon, zielone okiennice, wieżyczkę krytą dachem namiotowym. Czy widzisz inne ciekawe elementy? Budynek wpisano do Rejestru Zabytków w 1993 roku."],
- z:[{t:"foto",q:"Willa ma bardzo ciekawą bryłę. Przerysuj wieżyczkę — pamiętaj o wszystkich detalach, między innymi o gwieździe na czubku dachu i okrągłych oknach. Zrób zdjęcie rysunku."},
+ rozp:"Willa o złożonej bryle, z narożną wieżyczką krytą dachem namiotowym i zielonymi okiennicami.",
+ hist:["W 1900 roku firma Houtermans & Walter rozpoczyna budowę domu — to ta sama firma, która projektowała budynek przy ul. Bydgoskiej 40. Po ukończeniu budowy zamieszkała w nim jedna rodzina. Po II wojnie światowej w willi wydzielono cztery odrębne mieszkania.",
+ "Główne wejście znajduje się od strony ulicy Konopnickiej — czy potrafisz je odnaleźć? Zwróć uwagę na złożoność bryły i detale: balkon, zielone okiennice, wieżyczkę krytą dachem namiotowym. Czy widzisz inne ciekawe elementy? Budynek wpisano do Rejestru Zabytków w 1993 roku."],
+ z:[{t:"foto",q:"Willa ma bardzo ciekawą bryłę. Przerysuj wieżyczkę — pamiętaj o wszystkich detalach, między innymi o gwieździe na czubku dachu i okrągłych oknach. Zrób zdjęcie rysunku."},
     {t:"liczba",q:"Spójrz jeszcze raz na samą wieżyczkę na rogu. Ile małych okienek znajduje się na jej najwyższym poziomie?"},
-    {t:"tekst",q:"Gdybyś miał zamieszkać w jednym z poznanych już domów, który byś wybrał? Napisz krótko, dlaczego."}],
- f:{s:"img/04-konopnickiej-18.jpg",c:"Willa przy ul. Konopnickiej 18 — wieżyczka z dachem namiotowym i gwiazdą na czubku."},
+    {t:"tekst",q:"Gdybyś miał zamieszkać w jednym z poznanych już domów, który byś wybrał? Napisz krótko, dlaczego."}],
+ f:{s:"img/04-konopnickiej-18.jpg",c:"Willa przy ul. Konopnickiej 18 — wieżyczka z dachem namiotowym i gwiazdą na czubku."},
  g:[]},
 
-{n:5,x:578,y:175,skrz:"ul. Konopnickiej, w stronę ul. Mickiewicza",adres:"ul. Konopnickiej 24",
- trasa:"Kieruj się na północ, w stronę ulicy Mickiewicza. Odszukaj żółtą kamienicę z metalowymi balustradami balkonów.",
- rozp:"Żółta kamienica czynszowa z metalowymi balustradami balkonów.",
- hist:["Ta kamienica czynszowa powstała w latach 1904–1905 z inicjatywy Carla Franka. Obiekt ma cechy neobarokowe oraz elementy secesyjne.",
- "Pod koniec lat 70. XX wieku kamienica zmieniła wygląd — podczas remontu usunięto większość dekoracji sztukatorskiej i architektonicznej elewacji. Zachowały się natomiast piece kaflowe z XX wieku, z białych gładkich kafli glazurowanych z dekoracją floralną, oraz secesyjne malowidła ścienne.",
- "W 2015 roku studenci Konserwacji i Restauracji Dzieł Sztuki UMK wykonali badania na obecność polichromii w sieni, korytarzu i na klatce schodowej. W 2017 roku dwie studentki w ramach pracy dyplomowej rozpoczęły prace konserwatorsko-restauratorskie malowideł. Obiekt wpisano do Rejestru Zabytków w 2017 roku — czy nadal pamiętasz, jak wygląda oznaczenie takiego obiektu? Poszukaj tabliczki na elewacji."],
- z:[{t:"tekst",q:"Odnajdź na elewacji kobiecą twarz. W którym miejscu się znajduje?"}],
- fh:[{s:"img/05-konopnickiej-24-projekt.jpg",c:"Projekt elewacji kamienicy z 1903 roku. Biała Karta Zabytku, APT, sygn. G1726, k. 18. Porównaj rysunek z tym, co widzisz — w latach 70. XX w. usunięto większość dekoracji."}],
+{n:5,x:578,y:175,skrz:"ul. Konopnickiej, w stronę ul. Mickiewicza",adres:"ul. Konopnickiej 24",
+ trasa:"Kieruj się na północ, w stronę ulicy Mickiewicza. Odszukaj żółtą kamienicę z metalowymi balustradami balkonów.",
+ rozp:"Żółta kamienica czynszowa z metalowymi balustradami balkonów.",
+ hist:["Ta kamienica czynszowa powstała w latach 1904–1905 z inicjatywy Carla Franka. Obiekt ma cechy neobarokowe oraz elementy secesyjne.",
+ "Pod koniec lat 70. XX wieku kamienica zmieniła wygląd — podczas remontu usunięto większość dekoracji sztukatorskiej i architektonicznej elewacji. Zachowały się natomiast piece kaflowe z XX wieku, z białych gładkich kafli glazurowanych z dekoracją floralną, oraz secesyjne malowidła ścienne.",
+ "W 2015 roku studenci Konserwacji i Restauracji Dzieł Sztuki UMK wykonali badania na obecność polichromii w sieni, korytarzu i na klatce schodowej. W 2017 roku dwie studentki w ramach pracy dyplomowej rozpoczęły prace konserwatorsko-restauratorskie malowideł. Obiekt wpisano do Rejestru Zabytków w 2017 roku — czy nadal pamiętasz, jak wygląda oznaczenie takiego obiektu? Poszukaj tabliczki na elewacji."],
+ z:[{t:"tekst",q:"Odnajdź na elewacji kobiecą twarz. W którym miejscu się znajduje?"}],
+ f:{s:"img/05-konopnickiej-24.jpg",c:"Kamienica przy ul. Konopnickiej 24 — stan dzisiejszy. Falisty szczyt, kolumny przy wejściu, numer 24 nad drzwiami."},
+ fh:[{s:"img/05-konopnickiej-24-projekt.jpg",c:"Projekt elewacji kamienicy z 1903 roku. Biała Karta Zabytku, APT, sygn. G1726, k. 18. Porównaj rysunek z tym, co widzisz — w latach 70. XX w. usunięto większość dekoracji."}],
  g:["kamienica"]},
 
-{n:6,x:470,y:76,skrz:"ul. Mickiewicza",adres:"ul. Mickiewicza 60",
- trasa:"Skręć w ulicę Mickiewicza w kierunku zachodnim. Odszukaj szarą kamienicę z rombami w oknach.",
- rozp:"Szara kamienica z rombowymi podziałami okien i okazałym portalem bramy pośrodku fasady.",
- hist:["Znajdujesz się na ulicy Adama Mickiewicza, jednej z głównych ulic Bydgoskiego Przedmieścia, o długości około 2,5 kilometra. W 1886 roku nazywała się Mellienstrasse — na cześć Gottlieba Melliena, prezydenta i nadburmistrza Torunia w latach 1817–1830.",
- "Kamienica pod numerem 60 powstała w 1911 roku, zbudował ją mistrz murarski Oscar Köhm. Bramę wejściową, zlokalizowaną symetrycznie na środku fasady, zdobi okazały portal. Elewacja główna zwieńczona jest gzymsem wspartym figuralnymi konsolami z postaciami dzieci. Wykusz po lewej stronie fasady zdobiony jest figurami nereid, a nad nimi umieszczono dwa ozdobne kartusze. Obiekt wpisany jest do Rejestru Zabytków."],
+{n:6,x:470,y:76,skrz:"ul. Mickiewicza",adres:"ul. Mickiewicza 60",
+ trasa:"Skręć w ulicę Mickiewicza w kierunku zachodnim. Odszukaj szarą kamienicę z rombami w oknach.",
+ rozp:"Szara kamienica z rombowymi podziałami okien i okazałym portalem bramy pośrodku fasady.",
+ hist:["Znajdujesz się na ulicy Adama Mickiewicza, jednej z głównych ulic Bydgoskiego Przedmieścia, o długości około 2,5 kilometra. W 1886 roku nazywała się Mellienstrasse — na cześć Gottlieba Melliena, prezydenta i nadburmistrza Torunia w latach 1817–1830.",
+ "Kamienica pod numerem 60 powstała w 1911 roku, zbudował ją mistrz murarski Oscar Köhm. Bramę wejściową, zlokalizowaną symetrycznie na środku fasady, zdobi okazały portal. Elewacja główna zwieńczona jest gzymsem wspartym figuralnymi konsolami z postaciami dzieci. Wykusz po lewej stronie fasady zdobiony jest figurami nereid, a nad nimi umieszczono dwa ozdobne kartusze. Obiekt wpisany jest do Rejestru Zabytków."],
  z:[{t:"liczba",q:"Policz postaci na elewacji."},
-    {t:"tekst",q:"Czy któreś z nich nazwałbyś puttem? Zapisz, które i dlaczego."},
-    {t:"tekst",q:"Czasami budowniczowie ukrywali na ścianach datę powstania domu. Przyjrzyj się najwyższym partiom elewacji — czy udało Ci się wypatrzeć wykuty w tynku rok budowy?"}],
- f:{s:"img/06-mickiewicza-60.jpg",c:"Kamienica przy ul. Mickiewicza 60 — romby w oknach, wykusz z nereidami, data w szczycie."},
+    {t:"tekst",q:"Czy któreś z nich nazwałbyś puttem? Zapisz, które i dlaczego."},
+    {t:"tekst",q:"Czasami budowniczowie ukrywali na ścianach datę powstania domu. Przyjrzyj się najwyższym partiom elewacji — czy udało Ci się wypatrzeć wykuty w tynku rok budowy?"}],
+ f:{s:"img/06-mickiewicza-60.jpg",c:"Kamienica przy ul. Mickiewicza 60 — romby w oknach, wykusz z nereidami, data w szczycie."},
  g:["putto","nereida","kartusz"]},
 
-{n:7,x:310,y:76,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:null,
- trasa:"Podążaj w kierunku zachodnim. Odnajdź ulicę Klonowica.",
- rozp:"Narożna kamienica z wyeksponowaną cegłą i niską wieżyczką z hełmem na narożniku. Boniowany parter, powiększone okna wystawowe od strony Klonowica.",
- hist:["Narożna kamienica, przy której się znajdujesz, pochodzi z 1891 roku. W 1936 roku właściciel powiększył okna wystawowe od strony ul. Klonowica.",
- "Zbudowano ją w stylu nawiązującym do renesansu niderlandzkiego — w Holandii i Belgii wznoszono piękne, bogate domy handlowe z charakterystycznymi wielkimi wieżami na rogach i ozdobnymi dachami. Dolna partia budynku jest boniowana. Powyżej kamienica ma wyeksponowaną cegłę z kontrastującymi, tynkowanymi obramieniami i naczółkami okien oraz dekoracyjnymi poziomymi pasami. Narożnik zakończony jest wykuszem z niską wieżyczką z hełmem. Budynek jest wpisany do Rejestru Zabytków."],
- z:[{t:"foto",q:"Domy w stylu niderlandzkim często miały na szczytach ozdobne chorągiewki lub flagi. Zaprojektuj herb albo flagę, która mogłaby wisieć na dachu tej toruńskiej kamienicy — użyj geometrycznych kształtów i dumnych, królewskich wzorów. Zrób zdjęcie swojego projektu."}],
- f:{s:"img/07-mickiewicza-klonowica.jpg",c:"Narożna kamienica z 1891 roku — boniowany parter, wyeksponowana cegła, wieżyczka z hełmem. Dziś na parterze piekarnia."},
+{n:7,x:310,y:76,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:null,
+ trasa:"Podążaj w kierunku zachodnim. Odnajdź ulicę Klonowica.",
+ rozp:"Narożna kamienica z wyeksponowaną cegłą i niską wieżyczką z hełmem na narożniku. Boniowany parter, powiększone okna wystawowe od strony Klonowica.",
+ hist:["Narożna kamienica, przy której się znajdujesz, pochodzi z 1891 roku. W 1936 roku właściciel powiększył okna wystawowe od strony ul. Klonowica.",
+ "Zbudowano ją w stylu nawiązującym do renesansu niderlandzkiego — w Holandii i Belgii wznoszono piękne, bogate domy handlowe z charakterystycznymi wielkimi wieżami na rogach i ozdobnymi dachami. Dolna partia budynku jest boniowana. Powyżej kamienica ma wyeksponowaną cegłę z kontrastującymi, tynkowanymi obramieniami i naczółkami okien oraz dekoracyjnymi poziomymi pasami. Narożnik zakończony jest wykuszem z niską wieżyczką z hełmem. Budynek jest wpisany do Rejestru Zabytków."],
+ z:[{t:"foto",q:"Domy w stylu niderlandzkim często miały na szczytach ozdobne chorągiewki lub flagi. Zaprojektuj herb albo flagę, która mogłaby wisieć na dachu tej toruńskiej kamienicy — użyj geometrycznych kształtów i dumnych, królewskich wzorów. Zrób zdjęcie swojego projektu."}],
+ f:{s:"img/07-mickiewicza-klonowica.jpg",c:"Narożna kamienica z 1891 roku — boniowany parter, wyeksponowana cegła, wieżyczka z hełmem. Dziś na parterze piekarnia."},
  g:["bonie"],uw:"Paszport nie podaje numeru tego budynku. Rozpoznaj go po opisie."},
 
-{n:8,x:288,y:112,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:"ul. Mickiewicza 61",
- trasa:"Rozejrzyj się. Odnajdź w okolicy jasną kamienicę z zielonymi balustradami balkonów.",
- rozp:"Jasna kamienica secesyjna, asymetryczna, z licznymi balkonami i loggiami o zielonych balustradach.",
- hist:["Kamienicę zbudował w latach 1906–1907 piekarz Peter Gehrz. Pierwotnie na parterze znajdowała się piekarnia, sklep z owocami oraz urząd pocztowy. Na piętrach powstały duże mieszkania — sześcio- i siedmiopokojowe, z odrębnym pomieszczeniem dla służby.",
- "Styl architektoniczny budynku to secesja: bogato dekorowana malowniczymi detalami i ornamentami o miękkich kształtach. Elewacje są asymetryczne, z dużą liczbą balkonów, loggii i wykuszy, boniowane do wysokości drugiego piętra. Okna i balkony zdobią naczółki z motywami festonów. Kamienica jest wpisana do Rejestru Zabytków."],
- z:[{t:"tekst",q:"Przejdź wzdłuż kamienicy i odszukaj świadków przeszłości — napisy na elewacji. Jakie słowa jesteś w stanie rozpoznać?"},
-    {t:"tekst",q:"Przyjrzyj się balkonom i loggiom — ich barierki są dekorowane w różny sposób. Wymień zastosowane elementy dekoracyjne."}],
- f:{s:"img/08-mickiewicza-61.jpg",c:"Secesyjna kamienica przy ul. Mickiewicza 61 — asymetryczne elewacje, balkony, loggie i wykusze."},
+{n:8,x:288,y:112,skrz:"Róg ul. Mickiewicza i ul. Klonowica",adres:"ul. Mickiewicza 61",
+ trasa:"Rozejrzyj się. Odnajdź w okolicy jasną kamienicę z zielonymi balustradami balkonów.",
+ rozp:"Jasna kamienica secesyjna, asymetryczna, z licznymi balkonami i loggiami o zielonych balustradach.",
+ hist:["Kamienicę zbudował w latach 1906–1907 piekarz Peter Gehrz. Pierwotnie na parterze znajdowała się piekarnia, sklep z owocami oraz urząd pocztowy. Na piętrach powstały duże mieszkania — sześcio- i siedmiopokojowe, z odrębnym pomieszczeniem dla służby.",
+ "Styl architektoniczny budynku to secesja: bogato dekorowana malowniczymi detalami i ornamentami o miękkich kształtach. Elewacje są asymetryczne, z dużą liczbą balkonów, loggii i wykuszy, boniowane do wysokości drugiego piętra. Okna i balkony zdobią naczółki z motywami festonów. Kamienica jest wpisana do Rejestru Zabytków."],
+ z:[{t:"tekst",q:"Przejdź wzdłuż kamienicy i odszukaj świadków przeszłości — napisy na elewacji. Jakie słowa jesteś w stanie rozpoznać?"},
+    {t:"tekst",q:"Przyjrzyj się balkonom i loggiom — ich barierki są dekorowane w różny sposób. Wymień zastosowane elementy dekoracyjne."}],
+ f:{s:"img/08-mickiewicza-61.jpg",c:"Secesyjna kamienica przy ul. Mickiewicza 61 — asymetryczne elewacje, balkony, loggie i wykusze."},
  g:["loggia","feston","bonie"]},
 
-{n:9,x:145,y:76,skrz:"Róg ul. Mickiewicza i ul. Sienkiewicza",adres:"ul. Mickiewicza 92",
- trasa:"Kieruj się na zachód. Odszukaj skrzyżowanie z ul. Sienkiewicza.",
- rozp:"Narożna kamienica z balkonami na metalowych balustradach; od strony Sienkiewicza wsporniki wykuszu w formie atlantów.",
- hist:["Projekt tej kamienicy powstał w 1896 roku na zlecenie właściciela działki, piekarza Augusta Lipińskiego. W trakcie budowy dokonano poprawek — dodano między innymi balkony. W 1898 roku podjęto starania o zgodę na postawienie w przedogródku od strony ul. Sienkiewicza drewnianej altany, dziś już nieistniejącej.",
- "W 1928 roku w budynku mieściła się restauracja Teodora Taffela „Warszawianka”. W tym samym roku powstał projekt urządzenia sklepu od strony ul. Mickiewicza, z oknem wystawowym i drzwiami wejściowymi. W 2017 roku przeprowadzono prace restauracyjno-konserwatorskie, w trakcie których odsłonięto stare napisy wskazujące na istnienie tutaj piekarni oraz cukierni pierwszego właściciela. Budynek wpisano do Rejestru Zabytków w 2019 roku."],
- z:[{t:"tekst",q:"Obejdź budynek z każdej strony, odszukaj napisy na elewacjach i zanotuj je."},
-    {t:"liczba",q:"Po stronie od ul. Sienkiewicza odszukaj wsporniki wykuszu w formie okazałych atlantów. Ilu ich naliczysz?"}],
- f:{s:"img/09-mickiewicza-92.jpg",c:"Kamienica przy ul. Mickiewicza 92. Na parterze odsłonięte napisy „Bäckerei & Conditorei” — ślad po piekarni i cukierni pierwszego właściciela."},
+{n:9,x:145,y:76,skrz:"Róg ul. Mickiewicza i ul. Sienkiewicza",adres:"ul. Mickiewicza 92",
+ trasa:"Kieruj się na zachód. Odszukaj skrzyżowanie z ul. Sienkiewicza.",
+ rozp:"Narożna kamienica z balkonami o metalowych balustradach. Naprzeciwko kamienicy (ul. Sienkiewicza) budynek z wykuszem podtrzymywanym przez atlantów.",
+ hist:["Projekt tej kamienicy powstał w 1896 roku na zlecenie właściciela działki, piekarza Augusta Lipińskiego. W trakcie budowy dokonano poprawek — dodano między innymi balkony. W 1898 roku podjęto starania o zgodę na postawienie w przedogródku od strony ul. Sienkiewicza drewnianej altany, dziś już nieistniejącej.",
+ "W 1928 roku w budynku mieściła się restauracja Teodora Taffela „Warszawianka”. W tym samym roku powstał projekt urządzenia sklepu od strony ul. Mickiewicza, z oknem wystawowym i drzwiami wejściowymi. W 2017 roku przeprowadzono prace restauracyjno-konserwatorskie, w trakcie których odsłonięto stare napisy wskazujące na istnienie tutaj piekarni oraz cukierni pierwszego właściciela. Budynek wpisano do Rejestru Zabytków w 2019 roku."],
+ z:[{t:"tekst",q:"Obejdź budynek z każdej strony, odszukaj napisy na elewacjach i zanotuj je."},
+    {t:"liczba",q:"Po stronie od ul. Sienkiewicza odszukaj wsporniki wykuszu w formie okazałych atlantów. Ilu ich naliczysz?"}],
+ f:{s:"img/09-mickiewicza-92.jpg",c:"Kamienica przy ul. Mickiewicza 92. Na parterze odsłonięte napisy „Bäckerei & Conditorei” — ślad po piekarni i cukierni pierwszego właściciela."},
  g:["atlant"]},
 
-{n:10,x:112,y:200,skrz:"ul. Sienkiewicza, w stronę Parku Miejskiego",adres:"ul. Sienkiewicza 15",
- trasa:"Skręć w ulicę Sienkiewicza, w kierunku Parku Miejskiego. Odszukaj ceglany budynek.",
- rozp:"Ceglana kamienica neogotycka z ozdobnym szczytem zwieńczonym pinaklami.",
- hist:["Kamienica powstała około 1890 roku, wzniesiona w stylu neogotyckim. Dekorowana jest glazurowanymi, barwionymi cegłami oraz ozdobnym szczytem zwieńczonym pinaklami. Obecnie pełni funkcje usługowo-mieszkalne."],
- z:[{t:"tekst",q:"Podejdź bliżej i przyjrzyj się cegłom. Architekt oprócz zwykłych, czerwonych użył cegły o zupełnie innym, ciemniejszym kolorze, tworząc z nich ozdobne pasy. Wymień, jakie kolory cegieł zostały wykorzystane."},
-    {t:"tekst",q:"Odszukaj na elewacji dekoracyjne elementy, między innymi strzałki. Wymień wszystkie kształty i policz, ile ich jest."}],
- f:{s:"img/10-sienkiewicza-15.jpg",c:"Wejście do kamienicy przy ul. Sienkiewicza 15 — glazurowane cegły układają się w zygzaki i romby."},
- fh:[{s:"img/10-sienkiewicza-15-brama.jpg",c:"Brama od strony ulicy — ceglany łuk, schody i ciemne pasy z glazurowanej cegły."}],
+{n:10,x:112,y:200,skrz:"ul. Sienkiewicza, w stronę Parku Miejskiego",adres:"ul. Sienkiewicza 15",
+ trasa:"Skręć w ulicę Sienkiewicza, w kierunku Parku Miejskiego. Odszukaj ceglany budynek.",
+ rozp:"Ceglana kamienica neogotycka z ozdobnym szczytem zwieńczonym pinaklami.",
+ hist:["Kamienica powstała około 1890 roku, wzniesiona w stylu neogotyckim. Dekorowana jest glazurowanymi, barwionymi cegłami oraz ozdobnym szczytem zwieńczonym pinaklami. Obecnie pełni funkcje usługowo-mieszkalne."],
+ z:[{t:"tekst",q:"Podejdź bliżej i przyjrzyj się cegłom. Architekt oprócz zwykłych, czerwonych użył cegły o zupełnie innym, ciemniejszym kolorze, tworząc z nich ozdobne pasy. Wymień, jakie kolory cegieł zostały wykorzystane."},
+    {t:"tekst",q:"Odszukaj na elewacji dekoracyjne elementy, między innymi strzałki. Wymień wszystkie kształty i policz, ile ich jest."}],
+ f:{s:"img/10-sienkiewicza-15-elewacja.jpg",c:"Kamienica przy ul. Sienkiewicza 15 — stan dzisiejszy. Ozdobny szczyt z pinaklami, arkadowe loggie, zygzaki z glazurowanej cegły."},
+ fh:[{s:"img/10-sienkiewicza-15-brama.jpg",c:"Brama od strony ulicy — ceglany łuk, schody i ciemne pasy z glazurowanej cegły."},
+     {s:"img/10-sienkiewicza-15.jpg",c:"Wejście do kamienicy — glazurowane cegły układają się w zygzaki i romby. Przyjrzyj się im przy zadaniu o kolorach cegieł."}],
  g:["pinakiel","neogotyk"]},
 
-{n:11,x:112,y:350,skrz:"ul. Sienkiewicza, przy Parku Miejskim",adres:"ul. Sienkiewicza 4",
- trasa:"Podążaj w kierunku Parku Miejskiego. Po lewej stronie odnajdziesz budynek wzniesiony z żółto-czerwonej cegły.",
+{n:11,x:112,y:350,skrz:"ul. Sienkiewicza, przy Parku Miejskim",adres:"ul. Sienkiewicza 4",
+ trasa:"Podążaj w kierunku Parku Miejskiego. Po lewej stronie odnajdziesz budynek wzniesiony z żółto-czerwonej cegły.",
  rozp:"Żółto-czerwona willa neogotycka ze schodkowymi szczytami.",
- hist:["Budynek w stylu neogotyckim, zbudowany w 1901 roku dla kupca i rajcy miejskiego Emila Dietricha — według projektu Konrada Schwartza, właściciela budynku przy ul. Bydgoskiej 50-52, w którym zaczynałeś grę.",
- "Emil prowadził spółkę Dietrich & Sohn, założoną w 1841 roku przez jego ojca Carla Benjamina — wytwórnię gwoździ i artykułów żelaznych, która od 1907 roku miała siedzibę na osiedlu Mokre, a od 1913 roku w domu towarowym przy ul. Szerokiej 35. Był zaangażowanym mieszkańcem Torunia, aktywnie uczestniczącym w Izbie Handlowej, gdzie między innymi zabiegał o doprowadzenie do Torunia kolei, co nastąpiło w 1861 roku.",
- "Wkrótce po przyłączeniu Torunia do Polski w 1920 roku Emil wyjechał do Niemiec, a nowym właścicielem został Ignacy Ollech, kierownik spółki, która w 1921 roku przejęła firmę Dietricha. Od 1990 roku kamienica należy do Uniwersytetu Mikołaja Kopernika. W latach 1993–1994 działał tu Instytut Geografii — Zakład Geologii i Hydrogeologii, przeniesiony później do nowego budynku wydziałowego. Obecnie mieści się tu siedziba Zakładu Edukacji Artystycznej Wydziału Sztuk Pięknych."],
- z:[{t:"liczba",q:"Spójrz na samą górę budynku — szczyty są w typie schodkowym. Policz „schodki” na jednym z głównych szczytów widocznych od ulicy, od najniższego stopnia do samego czubka. Ile jest stopni?"}],
- f:{s:"img/11-sienkiewicza-4.jpg",c:"Willa przy ul. Sienkiewicza 4 — żółto-czerwona cegła i schodkowe szczyty. Dziś Zakład Edukacji Artystycznej UMK."},
- fh:[{s:"img/11-sienkiewicza-4-szczyt.jpg",c:"Szczyt schodkowy z bliska — od tego zdjęcia możesz zacząć liczenie stopni."}],
+ hist:["Budynek w stylu neogotyckim, zbudowany w 1901 roku dla kupca i rajcy miejskiego Emila Dietricha — według projektu Konrada Schwartza, właściciela budynku przy ul. Bydgoskiej 50-52, w którym zaczynałeś grę.",
+ "Emil prowadził spółkę Dietrich & Sohn, założoną w 1841 roku przez jego ojca Carla Benjamina — wytwórnię gwoździ i artykułów żelaznych, która od 1907 roku miała siedzibę na osiedlu Mokre, a od 1913 roku w domu towarowym przy ul. Szerokiej 35. Był zaangażowanym mieszkańcem Torunia, aktywnie uczestniczącym w Izbie Handlowej, gdzie między innymi zabiegał o doprowadzenie do Torunia kolei, co nastąpiło w 1861 roku.",
+ "Wkrótce po przyłączeniu Torunia do Polski w 1920 roku Emil wyjechał do Niemiec, a nowym właścicielem został Ignacy Ollech, kierownik spółki, która w 1921 roku przejęła firmę Dietricha. Od 1990 roku kamienica należy do Uniwersytetu Mikołaja Kopernika. W latach 1993–1994 działał tu Instytut Geografii — Zakład Geologii i Hydrogeologii, przeniesiony później do nowego budynku wydziałowego. Obecnie mieści się tu siedziba Zakładu Edukacji Artystycznej Wydziału Sztuk Pięknych."],
+ z:[{t:"liczba",q:"Spójrz na samą górę budynku — szczyty są w typie schodkowym. Policz „schodki” na jednym z głównych szczytów widocznych od ulicy, od najniższego stopnia do samego czubka. Ile jest stopni?"}],
+ f:{s:"img/11-sienkiewicza-4.jpg",c:"Willa przy ul. Sienkiewicza 4 — żółto-czerwona cegła i schodkowe szczyty. Dziś Zakład Edukacji Artystycznej UMK."},
+ fh:[{s:"img/11-sienkiewicza-4-szczyt.jpg",c:"Szczyt schodkowy z bliska — od tego zdjęcia możesz zacząć liczenie stopni."}],
  g:["neogotyk"]},
 
-{n:12,x:285,y:415,skrz:"Róg ul. Bydgoskiej i ul. Klonowica",adres:"ul. Bydgoska 60",
- trasa:"Kieruj się w stronę ulicy Bydgoskiej, potem na wschód — w stronę Kulturalnego hubu, przy którym zaczynałeś grę.",
- rozp:"Narożna kamienica z kontrastem czerwonej cegły i tynkowanych pól, z wykuszem zwieńczonym wieżyczką.",
- hist:["Kamienicę zbudowała przed 1897 rokiem toruńska firma Ulmer & Kaun według projektu berlińskich architektów Hermana Solfa i Franza Wichardsa, dla piekarza Franza Kruczkowskiego. Ci sami autorzy zaprojektowali kamienicę przy ul. Kazimierza Jagiellończyka 4. Oba budynki zostały wysoko ocenione i omówione w berlińskim czasopiśmie architektoniczno-budowlanym.",
- "Kamienica mieściła pięcio- i siedmiopokojowe mieszkania dla zamożnych mieszczan Torunia. Na parterze zlokalizowano piekarnię oraz cukiernię pierwszego właściciela. Budynek cechuje kontrast kolorystyczny elewacji, uzyskany dzięki czerwonej cegle i otynkowanym polom. W narożu znajduje się wykusz zwieńczony wieżyczką oraz dwa szczyty w formach neorenesansowych od ul. Bydgoskiej i trzy od ul. Klonowica."],
- z:[{t:"tekst",q:"Z karty obiektu wynika, że budynek oferował niezwykle luksusowe warunki jak na tamte czasy — mieszkania na piętrach miały od pięciu do siedmiu pokojów. Biorąc pod uwagę strukturę XIX-wiecznego społeczeństwa, dlaczego luksusowe mieszkania mieszczańskie musiały mieć aż tyle pomieszczeń? Kto oprócz właścicieli musiał się w nich pomieścić na co dzień?"},
-    {t:"wybor",q:"Berlin dyktował wtedy modę na eklektyzm i neorenesans — budynki miały wyglądać dumnie i reprezentacyjnie, niemal jak miejskie pałace nowej klasy bogatych mieszczan. Rozejrzyj się wokół tego skrzyżowania.",
+{n:12,x:285,y:415,skrz:"Róg ul. Bydgoskiej i ul. Klonowica",adres:"ul. Bydgoska 60",
+ trasa:"Kieruj się w stronę ulicy Bydgoskiej, potem na wschód — w stronę Kulturalnego hubu, przy którym zaczynałeś grę.",
+ rozp:"Narożna kamienica z kontrastem czerwonej cegły i tynkowanych pól, z wykuszem zwieńczonym wieżyczką.",
+ hist:["Kamienicę zbudowała przed 1897 rokiem toruńska firma Ulmer & Kaun według projektu berlińskich architektów Hermana Solfa i Franza Wichardsa, dla piekarza Franza Kruczkowskiego. Ci sami autorzy zaprojektowali kamienicę przy ul. Kazimierza Jagiellończyka 4. Oba budynki zostały wysoko ocenione i omówione w berlińskim czasopiśmie architektoniczno-budowlanym.",
+ "Kamienica mieściła pięcio- i siedmiopokojowe mieszkania dla zamożnych mieszczan Torunia. Na parterze zlokalizowano piekarnię oraz cukiernię pierwszego właściciela. Budynek cechuje kontrast kolorystyczny elewacji, uzyskany dzięki czerwonej cegle i otynkowanym polom. W narożu znajduje się wykusz zwieńczony wieżyczką oraz dwa szczyty w formach neorenesansowych od ul. Bydgoskiej i trzy od ul. Klonowica."],
+ z:[{t:"tekst",q:"Z karty obiektu wynika, że budynek oferował niezwykle luksusowe warunki jak na tamte czasy — mieszkania na piętrach miały od pięciu do siedmiu pokojów. Biorąc pod uwagę strukturę XIX-wiecznego społeczeństwa, dlaczego luksusowe mieszkania mieszczańskie musiały mieć aż tyle pomieszczeń? Kto oprócz właścicieli musiał się w nich pomieścić na co dzień?"},
+    {t:"wybor",q:"Berlin dyktował wtedy modę na eklektyzm i neorenesans — budynki miały wyglądać dumnie i reprezentacyjnie, niemal jak miejskie pałace nowej klasy bogatych mieszczan. Rozejrzyj się wokół tego skrzyżowania.",
      o:["Sąsiednie kamienice trzymają zbliżoną wysokość","Kamienica pod numerem 60 wyraźnie dominuje nad otoczeniem"]}],
- fh:[{s:"img/12-bydgoska-60.jpg",c:"Kamienica przy ul. Bydgoskiej 60 na archiwalnej fotografii — narożny wykusz z wieżyczką i neorenesansowe szczyty."}],
+ f:{s:"img/12-bydgoska-60-dzis.jpg",c:"Kamienica przy ul. Bydgoskiej 60 — stan dzisiejszy. Narożny wykusz z wieżyczką i neorenesansowe szczyty."},
+ fh:[{s:"img/12-bydgoska-60.jpg",c:"Kamienica przy ul. Bydgoskiej 60 na archiwalnej fotografii — narożny wykusz z wieżyczką i neorenesansowe szczyty."}],
  g:["eklektyzm"]}
 ];
 
@@ -362,7 +366,7 @@ function wczytaj(){
   jestZapis=Object.keys(ans).length>0||Object.keys(fotos).length>0||!!imie||!!notatki;
 }
 function odNowa(){
-  if(!confirm("Skasować wszystkie odpowiedzi i zacząć grę od nowa?\n\nTej operacji nie da się cofnąć."))return;
+  if(!confirm("Skasować wszystkie odpowiedzi i zacząć grę od nowa?\n\nTej operacji nie da się cofnąć."))return;
   for(const k in ans)delete ans[k];
   for(const k in fotos)delete fotos[k];
   imie="";notatki="";cur=0;jestZapis=false;blokadaZapisu=false;
@@ -370,8 +374,8 @@ function odNowa(){
   try{localStorage.removeItem(LS)}catch(e){}
   show("start");
 }
-const ostrzezenieZapisu=()=>blokadaZapisu?`<div class="uwaga"><b>Nie udało się zapisać zdjęcia w przeglądarce</b> — pamięć jest pełna.
-  Odpowiedzi działają w tej sesji, ale mogą nie przetrwać zamknięcia karty. Usuń jedno ze zdjęć albo pokaż paszport w recepcji teraz.</div>`:"";
+const ostrzezenieZapisu=()=>blokadaZapisu?`<div class="uwaga"><b>Nie udało się zapisać zdjęcia w przeglądarce</b> — pamięć jest pełna.
+  Odpowiedzi działają w tej sesji, ale mogą nie przetrwać zamknięcia karty. Usuń jedno ze zdjęć albo pokaż paszport w recepcji teraz.</div>`:"";
 
 document.addEventListener("visibilitychange",()=>{if(document.hidden){clearTimeout(zapisT);zapisz()}});
 window.addEventListener("pagehide",()=>{clearTimeout(zapisT);zapisz()});
@@ -394,10 +398,10 @@ function done(pi){const p=P[pi];return p.z.every((z,i)=>z.t==="foto"?!!fotos[K(p
 const nDone=()=>P.filter((_,i)=>done(i)).length;
 
 function vStart(){
-  return `<div class="trasa"><b>Punkt startowy:</b> Kulturalny hub, ul. Bydgoska 50-52</div>
+  return `<div class="trasa"><b>Punkt startowy:</b> Kulturalny hub, ul. Bydgoska 50-52</div>
   <div class="cover">
-    <p style="font-size:16.5px;text-align:left;margin:6px 0 0">Witaj, Odkrywco! Przed Tobą samodzielna gra terenowa po jednej z najpiękniejszych i najbardziej klimatycznych dzielnic Torunia. Znajdziesz tu unikalne kamienice, ryglowe konstrukcje i architektoniczne detale z przełomu XIX i XX wieku.</p>
-    ${fig({s:"img/99-pocztowka.jpg",c:"Bydgoskie Przedmieście na dawnej pocztówce — narożnik domu Konrada Schwartza przy ul. Bydgoskiej 50-52, od którego zaczyna się trasa. Źródło: fotopolska.eu."})}
+    <p style="font-size:16.5px;text-align:left;margin:6px 0 0">Witaj, Odkrywco! Przed Tobą samodzielna gra terenowa po jednej z najpiękniejszych i najbardziej klimatycznych dzielnic Torunia. Znajdziesz tu unikalne kamienice, ryglowe konstrukcje i architektoniczne detale z przełomu XIX i XX wieku.</p>
+    ${fig({s:"img/99-pocztowka.jpg",c:"Bydgoskie Przedmieście na dawnej pocztówce — narożnik domu Konrada Schwartza przy ul. Bydgoskiej 50-52, od którego zaczyna się trasa. Źródło: fotopolska.eu."})}
     <p class="mikro">Zasady gry</p>
     <ol class="zasady">${ZASADY.map(z=>`<li>${z}</li>`).join("")}</ol>
     ${jestZapis
@@ -406,9 +410,9 @@ function vStart(){
       :`<button class="cta" onclick="show('punkt',0)">Zacznij grę · 12 przystanków</button>`}
     <button class="cta gh" onclick="show('mapa')">Zobacz trasę na mapie</button>
     <div class="uwaga" style="text-align:left">${zapisDostepny
-      ?"Odpowiedzi zapisują się same w tej przeglądarce — możesz zamknąć kartę i wrócić później, nic nie przepadnie. Skasuje je tryb prywatny albo wyczyszczenie danych przeglądarki."
-      :"Ta przeglądarka nie pozwala zapisać odpowiedzi — najczęściej dlatego, że plik jest otwarty prosto z dysku albo działa tryb prywatny. Nie zamykaj karty w trakcie spaceru."}
-      Trasa jest pętlą: zaczynasz i kończysz przy Bydgoskiej 50.</div>
+      ?"Odpowiedzi zapisują się same w tej przeglądarce — możesz zamknąć kartę i wrócić później, nic nie przepadnie. Skasuje je tryb prywatny albo wyczyszczenie danych przeglądarki."
+      :"Ta przeglądarka nie pozwala zapisać odpowiedzi — najczęściej dlatego, że plik jest otwarty prosto z dysku albo działa tryb prywatny. Nie zamykaj karty w trakcie spaceru."}
+      Trasa jest pętlą: zaczynasz i kończysz przy Bydgoskiej 50.</div>
   </div>`;
 }
 
@@ -499,7 +503,7 @@ function vKoniec(){
     <h2 class="pt">Ostatnia misja</h2>
     <p>Twoje wielkie śledztwo pośród tajemniczych kamienic i ukrytych symboli dobiegło końca. Udało Ci się rozszyfrować wszystkie zagadki!</p>
     <p>Udaj się do recepcji Kulturalnego hubu Bydgoskiego Przedmieścia i przedstaw odpowiedzi na wszystkie napotkane po drodze pytania. Czeka tam na Ciebie zasłużona nagroda Mistrza Historii Bydgoskiego Przedmieścia. Dziękujemy za wspólną podróż przez historię i architekturę Bydgoskiego Przedmieścia!</p>
-    <p>Oddanie paszportu to świetny moment, żeby sprawdzić, co jeszcze przygotowaliśmy na te wakacje. Wpadnij do hubu na kreatywne warsztaty plastyczne, letnie wieczory bajkowe albo pełne śmiechu zabawy na świeżym powietrzu. Zapytaj w recepcji o ofertę wakacyjną — czekamy codziennie.</p>
+    <p>Oddanie paszportu to świetny moment na sprawdzenie naszej oferty kulturalnej. Czekają na Ciebie m.in. twórcze warsztaty, spotkania autorskie, wystawy, koncerty i wiele więcej.</p>
     ${fig({s:"img/99-hub-wnetrze.jpg",c:"Hol Kulturalnego hubu po remoncie — ten sam, który widziałeś na rycinie z epoki na pierwszym przystanku."})}
 
     <div class="cert">
@@ -541,7 +545,7 @@ function vKoniec(){
     </details>
 
     <button class="cta gh" onclick="show('punkt',0)">Wróć do trasy</button>
-    <p style="font-size:13.5px;color:var(--ink2);margin:22px 0 0;text-align:left">Paszport oddany i nagroda odebrana? Wyczyść odpowiedzi, żeby następny Odkrywca zaczął od czystej karty — szczególnie jeśli gracie na wspólnym telefonie albo tablecie z recepcji.</p>
+    <p style="font-size:13.5px;color:var(--ink2);margin:22px 0 0;text-align:left">Paszport oddany i nagroda odebrana? Wyczyść odpowiedzi, żeby następny Odkrywca zaczął od czystej karty — szczególnie jeśli gracie na wspólnym telefonie.</p>
     <button class="cta gh" onclick="odNowa()">Wyczyść i zacznij od nowa</button>
   </div>`;
 }
