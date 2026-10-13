@@ -53,7 +53,7 @@ Schwartza — archiwum rodzinne Eda Grube za nowosci.com.pl; projekt elewacji ka
 ul. Konopnickiej 24 z 1903 r. — Archiwum Państwowe w Toruniu, sygn. G1726, k. 18.
 Pełna lista źródeł znajduje się w samej grze, na ekranie końcowym.
 
-Wersja cyfrowa (demo techniczne): **Fundacja Lucid Academy** — [lucidacademy.pl](https://lucidacademy.pl).
+Wersja cyfrowa (demo techniczne): **Lucid Academy** — [lucidacademy.pl](https://lucidacademy.pl).
 Robimy cyfrowe narzędzia dla miast, instytucji kultury i szkół.
 
 ## Kod QR
